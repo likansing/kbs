@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>kbs</title>
+
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--Import materialize.css-->
+	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css"  media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
+	<script type="text/javascript" src="/materialize/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/materialize/js/materialize.js"></script>
+    <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+	<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+	<link src="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" >
+
+<style type="text/css">
+/* sobrescrever o nav padrao do materialize para trocar cor da barra */
+nav {
+	color: #fff;
+/* 	background-color: #ee6e73; */
+	background-color: #007db8;
+	width: 100%;
+	height: 56px;
+	line-height: 56px
+}
+</style>
+
+</head>
+<body>
+	
+	<h5 style="text-align: center;">Knowledge Base System</h5>
+
+	<nav>
+		<div class="nav-wrapper">
+			<a href="/index" class="brand-logo right">Logo</a>
+			<a href="#" class="sidenav-trigger" data-target="mobile-nav">
+				<i class="material-icons">menu</i>
+			</a>
+			<ul class="Right hide-on-med-and-down">
+				<li><a href="/index">Front Page</a></li>
+				<li><a href="/registerknowledge">Register New</a></li>
+				<li><a href="/admin">Admin</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<ul class="sidenav" id="mobile-nav">
+	    <li><a href="/index">Front Page</a></li>
+		<li><a href="/registerknowledge">Register New</a></li>
+		<li><a href="/admin">Admin</a></li>
+	</ul>
+
+	<br>
+	<br>
+	<br>
+	<h5>View Knowledge</h5>
+	<div th:each="k: ${knowledgeObj}">
+		<div class="row">
+			<p>ID: <span th:text="${k.id}"></span></p>
+			<p>Title: <span th:text="${k.title}"></span></p>
+			<p>Description: <span th:text="${k.description}"></span></p>
+			<p>Platform Name: <span th:text="${k.platform.platformName}"></span></p>
+			<p>Market Name: <span th:text="${k.platform.marketName}"></span></p>
+			<p>SYSID: <span th:text="${k.platform.sysid}"></span></p>
+			<p>Commodity: <span th:text="${k.commodity.commodity}"></span></p>
+			<p>Region: <span th:text="${k.regionCountry.region}"></span></p>
+			<p>Country: <span th:text="${k.regionCountry.country}"></span></p>
+			<p>Duplication Steps: <span th:text="${k.duplicationSteps}"></span></p>
+			<p>Severity: <span th:text="${k.severity}"></span></p>
+			<p>Solution: <span th:text="${k.solution}"></span></p>
+			<p>Status: <span th:text="${k.status}"></span></p>
+			<p>Create Date: <span th:text="${k.createDate}"></span></p>
+			<p>Close Date: <span th:text="${k.closeDate}"></span></p>
+		</div>
+	</div>
+	<label></label>
+
+<script type="text/javascript">
+		
+	$(document).ready(function(){
+ 		$('.sidenav').sidenav();
+ 	});
+</script>
+    
+</body>
+</html>

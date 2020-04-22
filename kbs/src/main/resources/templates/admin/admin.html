@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>kbs</title>
+
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--Import materialize.css-->
+	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css"  media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
+
+	<script type="text/javascript" src="/materialize/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/materialize/js/materialize.js"></script>
+    <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+	
+<style type="text/css">
+/* sobrescrever o nav padrao do materialize para trocar cor da barra */
+nav {
+	color: #fff;
+/* 	background-color: #ee6e73; */
+	background-color: #007db8;
+	width: 100%;
+	height: 56px;
+	line-height: 56px
+}
+/* sobrescrever o table.striped do materialize para trocar cor de fundo das linhas da tebela */
+table.striped>tbody>tr:nth-child(odd) {
+	background-color: #e6f7ff;
+}
+table {
+		margin-left:3px;
+		margin-right: 3px;
+	}
+	th, a, span {
+		text-align:center;
+	}
+	td span,a { 
+	   display: block;
+	   color: black;
+	}
+</style>
+
+</head>
+<body>
+
+	<h5 style="text-align: center;">Knowledge Base System</h5>
+
+	<nav style="position: fixed;">
+		<div class="nav-wrapper">
+			<a href="/index" class="brand-logo right">Logo</a>
+			<a href="#" class="sidenav-trigger" data-target="mobile-nav">
+				<i class="material-icons">menu</i>
+			</a>
+			<ul class="Right hide-on-med-and-down">
+				<li><a href="/index">Front Page</a></li>
+				<li><a href="/registerknowledge">Register New</a></li>
+				<li><a href="/admin">Admin</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<ul class="sidenav" id="mobile-nav">
+	    <li><a href="/index">Front Page</a></li>
+		<li><a href="/registerknowledge">Register New</a></li>
+		<li><a href="/admin">Admin</a></li>
+	</ul>
+
+	<br>
+	<br>
+	<br>
+	
+	<div th:each="m : ${msg}">
+		<span th:text = "${m}"></span>	
+	</div>
+
+	<div class="row">
+		<form action="saveplatform" id="formplatform" method="post" class="col s12" th:object="${platformObj}" >
+			<div class="row">
+				<div class="input-field col s6">
+					<label for="id" class="active">ID</label>
+					<input name="id" id="id" readonly="readonly" th:field="*{id}">
+				</div>
+				<div class="input-field col s6">
+					<label for="platformname" class="active">Platform Name</label>
+					<input name="platformname" id="platformname" class="validate" required="required" th:field="*{platformName}">
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s6">
+					<label for="marketname" class="active">Market Name</label>
+					<input id="marketname" name="marketname" class="validate" required="required" th:field="*{marketName}">
+				</div>
+				<div class="input-field col s6">	
+					<label for="sysid" class="active">SYSID</label>
+					<input id="sysid" name="sysid" class="validate" required="required" th:field="*{sysid}">
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s6">
+					<button class="btn waves-effect waves-light" type="submit" name="save">Save</button>
+					<button class="btn waves-effect waves-light" name="new" onclick="document.getElementById('formKnowledge').reset();">New</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	
+	<br>
+	
+	<table class="striped">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Platform Name</th>
+				<th>Market Name</th>
+				<th>SYSID</th>
+				<th>Edit</th>
+				<th>Remove</th>
+				
+			</tr>
+		</thead>
+		<tr th:each = "platformItem : ${platformList}">
+			<td><span th:text="${platformItem.id}"></span></td>
+			<td><span th:text = "${platformItem.platformName}"></span></td>
+			<td><span th:text = "${platformItem.marketName}"></span></td>
+			<td><span th:text = "${platformItem.sysid}"></span></td>
+			
+			<td><a ><img alt="Edit" th:src="@{/img/editar.png}" width="25" height="25"></a></td>
+			<td><a ><img alt="Delete" th:src="@{/img/delete5.png}" width="25" height="25"></a></td>
+		</tr>
+	</table>
+	
+	
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#createDate').datepicker({
+			showOthermonths:true,
+			format: 'yyyy-mm-dd'
+		});
+	});
+	
+	$(document).ready(function(){
+ 		$('.sidenav').sidenav();
+ 	});
+	
+</script>
+	
+</body>
+</html>
