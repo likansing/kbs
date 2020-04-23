@@ -16,12 +16,15 @@
 <!--     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
     
     
-    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
-	<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" >
+<!--     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script> -->
+<!-- 	<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" > -->
 	
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
-<!-- <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css"> -->
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+	<link rel="stylesheet" href="/materialize/css/chosen.min.css">
+	
 	
 	
 <style type="text/css">
@@ -86,6 +89,7 @@ nav {
 					<label for="platform" class="active">Platform Name</label>
 <!-- 					<select class="browser-default" th:field="*{platform}" onchange="productChanged(this.value)"> -->
 					<select class="browser-default" th:field="*{platform}" id="platselect">
+<!-- 					<select class="chosen" th:field="*{platform}" id="platselect"> -->
 						<option th:each="plat : ${platforms}" th:value="${plat.id}" th:text="${plat.platformName}"></option>
 					</select>
 				</div>
@@ -122,18 +126,18 @@ nav {
 				<div class="input-field col s6">
 					<label for="duplicationSteps" class="active">Duplication Steps</label>
 <!-- 					<input id="duplicationSteps" type="text" name="duplicationSteps" class="validate" th:field="*{duplicationSteps}"> -->
-					<textarea id="duplicationSteps" name="duplicationSteps" class="materialize-textarea" required="required" th:field="*{duplicationSteps}" data-length="250"></textarea>
+					<textarea id="duplicationSteps" name="duplicationSteps" class="materialize-textarea" th:field="*{duplicationSteps}" data-length="250"></textarea>
 				</div>
 				<div class="input-field col s6">
 					<label for="solution" class="active">Solution</label>
 <!-- 					<input id="solution" type="text" name="solution" class="validate" th:field="*{solution}"> -->
-					<textarea id="solution" name="solution" class="materialize-textarea" required="required" th:field="*{solution}" data-length="250"></textarea>
+					<textarea id="solution" name="solution" class="materialize-textarea" th:field="*{solution}" data-length="250"></textarea>
 				</div>
 			</div>
 			<div class="row">
 				<div class="input-field col s3">
 					<label for="status" class="active">Status</label>
-					<select class="browser-default" th:field="*{status}">
+					<select class="browser-default" th:field="*{status}" required="required">
 						<option value="" disabled="disabled" selected="selected">Choose</option>
 						<option value="OPEN" th:text="OPEN"></option>
 						<option value="CLOSED" th:text="CLOSED"></option>
@@ -141,7 +145,7 @@ nav {
 				</div>
 				<div class="input-field col s3">
 					<label for="country" class="active">Country</label>
-					<select class="browser-default" th:field="*{regionCountry}">
+					<select class="browser-default" th:field="*{regionCountry}" required="required">
 						<option th:each="ctry : ${countries}" th:value="${ctry.id}" th:text="${ctry.country}"></option>
 					</select>
 				</div>
@@ -179,6 +183,8 @@ nav {
 	
 	
 <script type="text/javascript">
+
+	$(".browser-default").chosen({width: "100%"});
 
 // 	$(document).ready(function(){
 	 
