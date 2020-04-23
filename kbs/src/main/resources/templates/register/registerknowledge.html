@@ -138,7 +138,7 @@ nav {
 				<div class="input-field col s3">
 					<label for="status" class="active">Status</label>
 					<select class="browser-default" th:field="*{status}" required="required">
-						<option value="" disabled="disabled" selected="selected">Choose</option>
+<!-- 						<option value="" disabled="disabled" selected="selected">Choose</option> -->
 						<option value="OPEN" th:text="OPEN"></option>
 						<option value="CLOSED" th:text="CLOSED"></option>
 					</select>
@@ -150,13 +150,13 @@ nav {
 					</select>
 				</div>
 				
-				<div class="input-field col s3">
+				<div class="col s3">
 					<label for="createDate" class="active">Create Date</label>
-					<input class="datepicker" id="createDate" name="createDate" required="required" th:field="*{createDate}">
+					<input type="date" id="createDate" name="createDate" required="required" th:field="*{createDate}">
 				</div>
-				<div class="input-field col s3">
+				<div class="col s3">
 					<label for="closeDate" class="active">Close Date</label>
-					<input class="datepicker" id="closeDate" name="closeDate"  th:field="*{closeDate}">
+					<input type="date" id="closeDate" name="closeDate"  th:field="*{closeDate}">
 				</div>
 			</div>
 			
@@ -227,22 +227,19 @@ nav {
 	 
 // 	});
 	
-	
-	
 
 
-
-	$(document).ready(function(){
-		$('#createDate').datepicker({
-			showOthermonths:true,
-			format: 'yyyy-mm-dd'
-		});
+// 	$(document).ready(function(){
+// 		$('#createDate').datepicker({
+// 			showOthermonths:true,
+// 			format: 'yyyy-mm-dd'
+// 		});
 		
-		$('#closeDate').datepicker({
-			showOthermonths:true,
-			format: 'yyyy-mm-dd'
-		});
-	});
+// 		$('#closeDate').datepicker({
+// 			showOthermonths:true,
+// 			format: 'yyyy-mm-dd'
+// 		});
+// 	});
 
 	$(document).ready(function(){
  		$('.sidenav').sidenav();
