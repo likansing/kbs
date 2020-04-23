@@ -85,20 +85,19 @@ nav {
 					<input name="title" type="text" id="title" class="validate" required="required" th:field="*{title}">
 					<label for="title" class="active">Title</label>
 				</div>
-				<div class="input-field col s3">	
-					<label for="platform" class="active">Platform Name</label>
-<!-- 					<select class="browser-default" th:field="*{platform}" onchange="productChanged(this.value)"> -->
+				<div class="input-field col s6">	
+					<label for="platform" class="active">Platform</label>
 					<select class="browser-default" th:field="*{platform}" id="platselect">
-<!-- 					<select class="chosen" th:field="*{platform}" id="platselect"> -->
+<!-- 						<option value="" selected="selected">Choose</option> -->
 						<option th:each="plat : ${platforms}" th:value="${plat.id}" th:text="${plat.platformName}"></option>
 					</select>
 				</div>
-				<div class="input-field col s3">	
-					<label for="marketname" class="active">Market Name</label>
-					<select class="browser-default" th:field="*{platform}" id="marketname">
-						<option th:each="plat : ${platforms}" th:value="${plat.id}" th:text="${plat.marketName}"></option>
-					</select>
-				</div>
+<!-- 				<div class="input-field col s3">	 -->
+<!-- 					<label for="marketname" class="active">Market Name</label> -->
+<!-- 					<select class="browser-default" th:field="*{platform}" id="marketname"> -->
+<!-- 						<option th:each="plat : ${platforms}" th:value="${plat.id}" th:text="${plat.marketName}"></option> -->
+<!-- 					</select> -->
+<!-- 				</div> -->
 			</div>
 			<div class="row">
 				<div class="input-field col s6">
@@ -171,7 +170,7 @@ nav {
 			<div class="row">
 				<div class="input-field col s6">
 					<button class="btn waves-effect waves-light" type="submit" name="save">Save</button>
-					<button class="btn waves-effect waves-light" type="reset" name="new">New</button>
+					<button class="btn waves-effect waves-light" type="reset" name="new" onclick="resetfields()">New</button>
 					
 				</div>
 			</div>
@@ -185,6 +184,10 @@ nav {
 <script type="text/javascript">
 
 	$(".browser-default").chosen({width: "100%"});
+	
+	function resetfields(){
+		$(".browser-default").val('').trigger("chosen:updated");
+	}
 
 // 	$(document).ready(function(){
 	 

@@ -54,7 +54,6 @@ public class KnowledgeController {
 	
 	@Autowired
 	DinamicHql dinamicHql;
-	
 
 
 	@RequestMapping("/")
@@ -99,7 +98,17 @@ public class KnowledgeController {
 	public ModelAndView registerKnowledge() {
 		ModelAndView modelAndView = new ModelAndView("register/registerknowledge");
 		modelAndView.addObject("knowledgeObj", new Knowledge());
-		modelAndView.addObject("platforms", platformRepository.findAll());
+		
+		//prepare parameter platforms to be send to view as PlatformaName-MarketName
+		
+		Iterable<Platform> platforms = platformRepository.findAll();
+		
+		for (Platform platform : platforms) {
+			platform.setPlatformName(platform.getPlatformName() + " " + platform.getMarketName());
+		}
+		
+		modelAndView.addObject("platforms", platforms);
+//		modelAndView.addObject("platforms", platformRepository.findAll()); old from 23/abril rev3
 		modelAndView.addObject("commodities", commodityRepository.findAll());
 		modelAndView.addObject("countries", regionCountryRepository.findAll());
 		return modelAndView;
