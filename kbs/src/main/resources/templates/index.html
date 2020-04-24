@@ -59,6 +59,11 @@
 	.chosen-single span {
 		text-align: left;
 	}
+	
+	button {
+		margin: 0;
+	}
+	
 </style>
 
 </head>
@@ -159,10 +164,10 @@
 				</div>
 			</div>
 			<div>
-				<div class="input-field col" >
+				<div class="input-field col S1" >
 					<button class="btn waves-effect waves-teal" type="submit" name="search" style="margin: 0px; left: 0px;">Search</button>
 				</div>
-				<div class="input-field col" >
+				<div class="input-field col s1" >
 					<button id="resetbtn" class="btn waves-effect waves-teal" type="reset" name="search" onclick="resetfields()">Clear Form</button>
 				</div>
 			</div>
@@ -172,18 +177,27 @@
 
 	<div class="row">
 		<form action="/index" method="post">
-			<div class="input-field col">
+			<div class="input-field col s2">
 				<button class="btn waves-effect waves-teal" type="submit" name="search">Clear filtered data</button>
 			</div>
 		</form>
 		
 	</div>
 
-	<div th:each="m : ${msg}" style="margin: 8px;">
-		<span th:text = "${m}"></span>	
+	<div class="row" style="box-sizing: content-box;">
+		<div class="input-field col s12">
+			<div th:each="m : ${msg}">
+				<ul class="yellow lighten-4" style="height: 30px;">
+					<li class="collection-item avatar">
+						<span style="vertical-align:middle;" th:text="${m}"></span>
+					</li>
+				</ul>
+			</div>
+		</div>
 	</div>
 
-<!-- 	<h4 style="text-align: center">List of Registers</h4> -->
+
+	<!-- 	<h4 style="text-align: center">List of Registers</h4> -->
 	<fieldset>
 	<legend style="padding-left: 5px; padding-right: 5px;">List of Registers</legend>	
 	<table class="striped">
