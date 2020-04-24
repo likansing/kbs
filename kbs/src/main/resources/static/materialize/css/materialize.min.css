@@ -5428,7 +5428,7 @@ body.keyboard-focused .dropdown-content li:focus {
 	margin-left: -10px;
 	opacity: 0;
 	background: rgba(0, 0, 0, 0.2);
-	-webkit-transition: all 0.7s ease-out;
+	-webkit-transition: all 0.1s ease-out;
 	transition: all 0.7s ease-out;
 	-webkit-transition-property: opacity, -webkit-transform;
 	transition-property: opacity, -webkit-transform;

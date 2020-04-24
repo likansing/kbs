@@ -34,10 +34,10 @@
 		background-color: #e6f7ff;
 	}
 	table.striped>tbody>tr:nth-child(odd):hover {
-		background: #b0e6ff;
+		background: #fff3b0;
 	}
 	table.striped>tbody>tr:hover {
-	    background: #b0e6ff;
+	    background: #fff3b0;
 	}
 	td a { 
 	   display: block;
@@ -92,7 +92,7 @@
 	<div class="row">
 		<form action="searchknowledge" method="post" class="col s12" th:object="${knowledgeObj}">
 			<div class="row">
-				<div class="input-field col s3">
+				<div class="input-field col s4">
 					<label for="platforminfo" class="active">Platform</label>
 					<select class="browser-default" name="platforminfo" id="platforminfo" th:value="${platforminfo}">
 						<option value="" selected="selected">Choose</option>
@@ -101,14 +101,14 @@
 						<option value="sysid" th:text="SYSID"></option>
 					</select>
 				</div>
-				<div class="input-field col s3">
+				<div class="input-field col s4">
 					<label for="searchWord" class="active">keywords</label>
 <!-- 					<input id="searchWord" type="text" name="searchWord" class="validate" th:value="${searchWord}"> -->
 						<input id="searchWord" type="text" name="searchWord" class="validate">
 				</div>
 			</div>
 			<div class="row">
-				<div class="input-field col s3">
+				<div class="input-field col s4">
 					<label for="titledescriptioninfo" class="active">Title and/or Description</label>
 					<select class="browser-default" name="titledescriptioninfo" id="titledescriptioninfo" th:value="${titledescriptioninfo}">
 						<option value="" selected="selected">Choose</option>
@@ -117,21 +117,21 @@
 						<option value="both" th:text="Title_or_Description"></option>
 					</select>
 				</div>
-				<div class="input-field col s3">
+				<div class="input-field col s4">
 					<label for="titledescriptionkeyword" class="active">keywords</label>
 <!-- 					<input id="titledescriptionkeyword" type="text" name="titledescriptionkeyword" class="validate" th:value="${titledescriptionkeyword}"> -->
 						<input id="titledescriptionkeyword" type="text" name="titledescriptionkeyword" class="validate">
 				</div>
 			</div>
 			<div class="row">
-				<div class="input-field col s3">
+				<div class="input-field col s4">
 					<label for="commodityinfo" class="active">Commodity</label>
 					<select class="browser-default" name="commodityinfo" id="commodityinfo" th:value="${commodityinfo}">
 						<option value="" selected="selected">Choose</option>
 						<option th:each="c : ${commodities}" th:value="${c.id}" th:text="${c.commodity}"></option>
 					</select>
 				</div>
-				<div class="input-field col s3">
+				<div class="input-field col s4">
 					<label for="countryinfo" class="active">Country</label>
 					<select class="browser-default" name="countryinfo" id="countryinfo" th:value="${countryinfo}">
 						<option value="" selected="selected">Choose</option>
@@ -140,7 +140,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="input-field col s3">
+				<div class="input-field col s4">
 					<label for="statusinfo" class="active">Status</label>
 					<select class="browser-default" name="statusinfo" id="statusinfo" th:value="${statusinfo}">
 						<option value="" selected="selected">Choose</option>
@@ -148,10 +148,10 @@
 						<option value="CLOSED" th:text="CLOSED"></option>
 					</select>
 				</div>	
-				<div class="input-field col s3">
+				<div class="input-field col s4">
 					<label for="severityinfo" class="active">Severity</label>
 					<select class="browser-default" name="severityinfo" id="severityinfo">
-						<option value="">Choose</option>
+						<option value="" selected="selected">Choose</option>
 						<option value="LOW_IMPACT" th:text="LOW_IMPACT"></option>
 						<option value="MEDIUM_IMPACT" th:text="MEDIUM_IMPACT"></option>
 						<option value="HIGH_IMPACT" th:text="HIGH_IMPACT"></option>
@@ -160,10 +160,10 @@
 			</div>
 			<div>
 				<div class="input-field col" >
-					<button class="btn waves-effect waves-light" type="submit" name="search" style="margin: 0px; left: 0px;">Search</button>
+					<button class="btn waves-effect waves-teal" type="submit" name="search" style="margin: 0px; left: 0px;">Search</button>
 				</div>
 				<div class="input-field col" >
-					<button id="resetbtn" class="btn waves-effect waves-light" type="reset" name="search" onclick="resetfields()">Clear Form</button>
+					<button id="resetbtn" class="btn waves-effect waves-teal" type="reset" name="search" onclick="resetfields()">Clear Form</button>
 				</div>
 			</div>
 		</form>
@@ -173,7 +173,7 @@
 	<div class="row">
 		<form action="/index" method="post">
 			<div class="input-field col">
-				<button class="btn waves-effect waves-light" type="submit" name="search">Clear filtered data</button>
+				<button class="btn waves-effect waves-teal" type="submit" name="search">Clear filtered data</button>
 			</div>
 		</form>
 		

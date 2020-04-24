@@ -87,8 +87,7 @@ nav {
 				</div>
 				<div class="input-field col s6">	
 					<label for="platform" class="active">Platform</label>
-					<select class="browser-default" th:field="*{platform}" id="platselect">
-<!-- 						<option value="" selected="selected">Choose</option> -->
+					<select class="browser-default" name="platform" id="platselect" th:field="*{platform}" required="required">
 						<option th:each="plat : ${platforms}" th:value="${plat.id}" th:text="${plat.platformName}"></option>
 					</select>
 				</div>
@@ -107,15 +106,15 @@ nav {
 				</div>
 				<div class="input-field col s3">	
 					<label for="commodity" class="active">Commodity</label>
-					<select class="browser-default" th:field="*{commodity}">
+					<select class="browser-default" th:field="*{commodity}" required="required">
 <!-- 						<option value="" disabled="disabled" selected="selected">Choose</option> -->
 						<option th:each="c : ${commodities}" th:value="${c.id}" th:text="${c.commodity}"></option>
 					</select>
 				</div>
 				<div class="input-field col s3">
 					<label for="severity" class="active">Severity</label>
-					<select class="browser-default" th:field="*{severity}">
-						<option value="LOW_IMPACT" th:text="LOW_IMPACT"></option>
+					<select class="browser-default" th:field="*{severity}" required="required">
+						<option selected="selected" value="LOW_IMPACT" th:text="LOW_IMPACT"></option>
 						<option value="MEDIUM_IMPACT" th:text="MEDIUM_IMPACT"></option>
 						<option value="HIGH_IMPACT" th:text="HIGH_IMPACT"></option>
 					</select>
@@ -138,7 +137,7 @@ nav {
 					<label for="status" class="active">Status</label>
 					<select class="browser-default" th:field="*{status}" required="required">
 <!-- 						<option value="" disabled="disabled" selected="selected">Choose</option> -->
-						<option value="OPEN" th:text="OPEN"></option>
+						<option selected="selected" value="OPEN" th:text="OPEN"></option>
 						<option value="CLOSED" th:text="CLOSED"></option>
 					</select>
 				</div>
@@ -169,14 +168,11 @@ nav {
 
 			<div class="row">
 				<div class="input-field col s6">
-					<button class="btn waves-effect waves-light" type="submit" name="save">Save</button>
-					<button class="btn waves-effect waves-light" type="reset" name="new" onclick="resetfields()">New</button>
+					<button class="btn waves-effect waves-teal" type="submit" name="save">Save</button>
+					<button class="btn waves-effect waves-teal" th:type="reset" name="new" id="resetar">New</button>
 					
 				</div>
 			</div>
-
-
-
 		</form>
 	</div>
 	
@@ -185,10 +181,54 @@ nav {
 
 	$(".browser-default").chosen({width: "100%"});
 	
-	function resetfields(){
-		$(".browser-default").val('').trigger("chosen:updated");
-	}
+// 	function resetfields(){
+// 		$(".browser-default").val('').trigger("chosen:updated");
+// 	}
+	
+	 $(document).ready(function() { 
+         $("#resetar").click(function() { 
+             $("#formKnowledge").trigger("reset");
+             //$("#formKnowledge").get(0).reset(); 
+             //$("#formKnowledge")[0].reset()
+         }); 
+     });
+	 
+	 $('#createDate').change(function(){
+		 var date = new Date($('#createDate').val());
+		 //retorno dia do mes anterior
+		 var day = date.getUTCDate();
+		 var month = date.getUTCMonth() + 1;
+		 var year = date.getUTCFullYear();
+// 		 alert([day, month, year].join('/'));
+// 		 alert(date);
+		 
+         if(month < 10)
+		 month = '0' + month.toString();
+		 if(day < 10)
+		 	day = '0' + day.toString();
 
+		 var minDate = year + '-' + month + '-' + day;    
+		 $('#closeDate').attr('min', minDate);
+	 });
+	 
+	 $(function(){
+		 
+		 
+		 var dtToday = new Date();
+
+		 var month = dtToday.getMonth() + 1;
+		 var day = dtToday.getDate();
+		 var year = dtToday.getFullYear();
+
+		 if(month < 10)
+		     month = '0' + month.toString();
+		 if(day < 10)
+		     day = '0' + day.toString();
+	    var maxDate = year + '-' + month + '-' + day;    
+	    $('#closeDate').attr('max', maxDate);
+	    $('#createDate').attr('max', maxDate);
+	});
+	
 // 	$(document).ready(function(){
 	 
 // 	 // Initialize Date picker
@@ -270,58 +310,7 @@ nav {
 // 	  maxDate: new Date(), // set maximum date to "today"
 // 	  autoClose: true // [optional] enable date picking on a very small window
 // 	})
-	
-	
 
-
-	
-	
-	
-	
-	
-	
 </script>
-
-<script type="text/javascript">
-
-// 	$( "#platselect" ).change(function() {
-// 		var id = $("#platselect option:selected").attr('value');
-// 	    //alert(id);
-	    
-// 	    var request = $.ajax({
-//             url : "${pageContext.request.contextPth}/productchange/",
-//             type : "post",
-//             data : "id="+$("#platselect").val(),
-//             success: function(res){
-//             	//alert('recebeu sucesso!' + res);
-//             	alert(res);
-            	
-// //             	var recebido = res[1];
-// //             	alert(recebido);
-//             },
-//             error: function(){
-//             	alert('erro no request');
-//             }
-//           });
-	    
-// 	    //$("#marketname").attr('value') = id;
-// 	    //$( "#divteste" ).text( "trocado valor no campo" ).show().fadeOut( 1000 );
-		
-// 	});
-
-  	function productChanged(val){
-		
-  		var url = '/productchange/'+val;
-  		alert(url);
- 		
-  			
- 		$("#marketname").load(url);
- 		
-  		//$("#marketname").textContent.load(url);
- 		//document.getElementById("marketname").value = val;
-		//document.getElementById("marketname").textContent = val;
- 	}
-</script>
-
 </body>
 </html>
