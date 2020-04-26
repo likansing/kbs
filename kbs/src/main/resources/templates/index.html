@@ -189,7 +189,7 @@
 			<div th:each="m : ${msg}">
 				<ul class="yellow lighten-4" style="height: 30px;">
 					<li class="collection-item avatar">
-						<span style="vertical-align:middle;" th:text="${m}"></span>
+						<span style="vertical-align:middle; padding-left: 10px;" th:text="${m}"></span>
 					</li>
 				</ul>
 			</div>
@@ -242,6 +242,40 @@
 			<td><a th:href="@{/deleteknowledge/{knowledgeItemId}(knowledgeItemId=${knowledgeItem.id})}"><img alt="Delete" th:src="@{/img/delete5.png}" width="25" height="25"></a></td>
 		</tr>
 	</table>
+	
+	<div>&nbsp;</div>
+	<div>
+		Total Items: [[${totalItems}]] - Page [[${currentPage}]] of [[${totalPages}]]
+		&nbsp; - &nbsp;
+		
+		<a th:if="${currentPage > 1}" th:href="@{/page/1}">First</a>
+		<span th:unless="${currentPage > 1}">First</span>
+
+		&nbsp;
+
+		<a th:if="${currentPage > 1}" th:href="@{'/page/' + ${currentPage -1}}">Previous</a>
+		<span th:unless="${currentPage > 1}">Previous</span>
+		
+		&nbsp;&nbsp;&nbsp;
+		
+		<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+			<a th:if="${i != currentPage}" th:href="@{'/page/' + ${i}}">[[${i}]]</a>
+			<span th:unless="${i != currentPage}">[[${i}]]</span>
+			&nbsp;&nbsp;
+		</span>
+		
+		&nbsp;
+		
+		<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}}">Next</a>
+		<span th:unless="${currentPage < totalPages}">Next</span>
+
+		&nbsp;
+
+		<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}}">Last</a>
+		<span th:unless="${currentPage < totalPages}">Last</span>
+		
+		
+	</div>
 	
 	
 <!-- 	<div class="row" style="margin-top: 30px; text-align: center;"> -->
