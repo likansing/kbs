@@ -3,6 +3,7 @@ package com.kbs.repository;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ import com.kbs.model.Knowledge;
 @Service
 public class KnowledgeService {
 	
+	@Autowired
+	private EntityManagerFactory emf;
+	
 	@PersistenceContext
 	private EntityManager entityManager;
 	
@@ -29,16 +33,29 @@ public class KnowledgeService {
 		return knowledgeRepository.findAll(pageable);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Knowledge> executaHqlDinamicService(String hql, int pageNumber){
+		entityManager = emf.createEntityManager();
+		entityManager.getTransaction().begin();
 		
-		//Sort sort = Sort.by("id").descending();
-		//Pageable pageable = PageRequest.of(pageNumber - 1, 5, sort);
+		pageNumber = pageNumber - 1;
 		
-		return entityManager.createQuery(hql).setFirstResult(pageNumber * 5).setMaxResults(5).getResultList();
+		List<Knowledge> list = entityManager.createQuery(hql).setFirstResult(pageNumber * 5).setMaxResults(5).getResultList();
+		entityManager.getTransaction().commit();
+		entityManager.close();
+		return list;
+	}
+	
+	public int getTotalQtyOfRecord(String hql){
+		entityManager = emf.createEntityManager();
+		entityManager.getTransaction().begin();
 		
-//		return entityManager.createQuery(hql).getResultList();
+		int qtyRegisters = entityManager.createQuery(hql).getResultList().size();
 		
-		//return knowledgeRepository.findAll(pageable);
+		entityManager.getTransaction().commit();
+		entityManager.close();
+		
+		return qtyRegisters;
 	}
 
 }

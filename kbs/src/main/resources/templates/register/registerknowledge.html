@@ -181,15 +181,21 @@ nav {
 
 	$(".browser-default").chosen({width: "100%"});
 	
-// 	function resetfields(){
-// 		$(".browser-default").val('').trigger("chosen:updated");
-// 	}
-	
 	 $(document).ready(function() { 
-         $("#resetar").click(function() { 
-             $("#formKnowledge").trigger("reset");
-             //$("#formKnowledge").get(0).reset(); 
-             //$("#formKnowledge")[0].reset()
+        
+        	 var id = document.getElementById("id").value;
+        	 //alert(id);
+        	 if (id != ""){
+        		 document.getElementById("resetar").innerHTML = "Cancel";
+        	 }
+		 
+		 $("#resetar").click(function() {
+        	 
+			 if (id != ""){
+				 window.location.replace("/index");
+        	 } else {
+	             $("#formKnowledge").trigger("reset");
+        	 }
          }); 
      });
 	 
@@ -213,7 +219,6 @@ nav {
 	 
 	 $(function(){
 		 
-		 
 		 var dtToday = new Date();
 
 		 var month = dtToday.getMonth() + 1;
@@ -227,6 +232,22 @@ nav {
 	    var maxDate = year + '-' + month + '-' + day;    
 	    $('#closeDate').attr('max', maxDate);
 	    $('#createDate').attr('max', maxDate);
+	    
+	    
+	    var date = new Date($('#createDate').val());
+		 //retorno dia do mes anterior
+		 var day = date.getUTCDate();
+		 var month = date.getUTCMonth() + 1;
+		 var year = date.getUTCFullYear();
+		 
+        if(month < 10)
+		 month = '0' + month.toString();
+		 if(day < 10)
+		 	day = '0' + day.toString();
+
+		 var minDate = year + '-' + month + '-' + day;    
+		 $('#closeDate').attr('min', minDate);
+	    
 	});
 	
 // 	$(document).ready(function(){

@@ -501,27 +501,42 @@ ModelAndView modelAndView = new ModelAndView("/index");
 		}
 		
 		
-//		int currentPage = 1;
-//		List<Knowledge> filteredList = service.executaHqlDinamicService(sql, currentPage);
-//		int totalItems = filteredList.size();
-//		int totalPages = 5;
-//		List<Knowledge> knowledgeList = page.getContent();
-//		
-//		modelAndView.addObject("currentPage", currentPage);
-//		modelAndView.addObject("totalItems", totalItems);
-//		modelAndView.addObject("totalPages", totalPages);
-//		modelAndView.addObject("knowledgeList", filteredList);
-//		modelAndView.addObject("commodities", commodityRepository.findAll());
-//		modelAndView.addObject("knowledgeObj", new Knowledge());
-//		modelAndView.addObject("countries", regionCountryRepository.findAll());
+		int currentPage = 1;
+		List<Knowledge> filteredList = service.executaHqlDinamicService(sql, currentPage);
+		int totalItems = service.getTotalQtyOfRecord(sql);
+		int totalPages = totalItems / 5;
+		double resto = totalItems % 5;
+		
+		if (resto > 0) {
+			totalPages++;
+		}
+		
+		//List<Knowledge> knowledgeList = page.getContent();
+		
+		modelAndView.addObject("currentPage", currentPage);
+		modelAndView.addObject("totalItems", totalItems);
+		modelAndView.addObject("totalPages", totalPages);
+		modelAndView.addObject("knowledgeList", filteredList);
+		modelAndView.addObject("commodities", commodityRepository.findAll());
+		
+		Platform p = new Platform();
+		p.setMarketName(platforminfo);
+		p.setPlatformName(platforminfo);
+		p.setSysid(platforminfo);
+		Knowledge k = new Knowledge();
+		k.setPlatform(p);
+		
+		
+		modelAndView.addObject("knowledgeObj", k);
+		modelAndView.addObject("countries", regionCountryRepository.findAll());
 //		return modelAndView;
 		
 		
-		List<Knowledge> filteredList = (List<Knowledge>) dinamicHql.executaHqlDinamic(sql);
-		modelAndView.addObject("knowledgeList", filteredList);
-		modelAndView.addObject("commodities", commodityRepository.findAll());
-		modelAndView.addObject("knowledgeObj", new Knowledge()); //add to try to keep option os filter (not working so far)
-		modelAndView.addObject("countries", regionCountryRepository.findAll());
+//		List<Knowledge> filteredList = (List<Knowledge>) dinamicHql.executaHqlDinamic(sql);
+//		modelAndView.addObject("knowledgeList", filteredList);
+//		modelAndView.addObject("commodities", commodityRepository.findAll());
+//		modelAndView.addObject("knowledgeObj", new Knowledge()); //add to try to keep option os filter (not working so far)
+//		modelAndView.addObject("countries", regionCountryRepository.findAll());
 		modelAndView.addObject("platforminfo", platforminfo);
 		modelAndView.addObject("searchWord", searchWord);
 		modelAndView.addObject("titledescriptioninfo", titledescriptioninfo);
