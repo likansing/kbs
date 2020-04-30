@@ -62,6 +62,7 @@
 	
 	button {
 		margin: 0;
+		width: 100px;
 	}
 	
 </style>
@@ -100,16 +101,20 @@
 				<div class="input-field col s4">
 					<label for="platforminfo" class="active">Platform</label>
 					<select class="browser-default" name="platforminfo" id="platforminfo" th:value="${platforminfo}">
-						<option value="" selected="selected">Choose</option>
-						<option value="platformName" th:text="Platform_Name"></option>
-						<option value="marketName" th:text="Market_Name"></option>
-						<option value="sysid" th:text="SYSID"></option>
+						<option value="">Choose</option>
+						<option th:if="${platforminfo == 'platformName'}" th:value="${platforminfo}" selected="selected">Platform Name</option>
+						<option th:unless="${platforminfo == 'platformName'}" value="platformName" >Platform Name</option>
+						
+						<option th:if="${platforminfo == 'marketName'}" th:value="${platforminfo}" selected="selected">Market Name</option>
+						<option th:unless="${platforminfo == 'marketName'}" value="marketName">Market Name</option>
+						
+						<option th:if="${platforminfo == 'sysid'}" th:value="${platforminfo}" selected="selected">SYSID</option>
+						<option th:unless="${platforminfo == 'sysid'}" value="sysid">SYSID</option>
 					</select>
 				</div>
 				<div class="input-field col s4">
 					<label for="searchWord" class="active">keywords</label>
 					<input id="searchWord" type="text" name="searchWord" class="validate" th:value="${searchWord}">
-<!-- 						<input id="searchWord" type="text" name="searchWord" class="validate"> -->
 				</div>
 			</div>
 			<div class="row">
@@ -117,15 +122,19 @@
 					<label for="titledescriptioninfo" class="active">Title and/or Description</label>
 					<select class="browser-default" name="titledescriptioninfo" id="titledescriptioninfo" th:value="${titledescriptioninfo}">
 						<option value="" selected="selected">Choose</option>
-						<option value="title" th:text="Title_only"></option>
-						<option value="description" th:text="Description_only"></option>
-						<option value="both" th:text="Title_or_Description"></option>
+						<option th:if="${titledescriptioninfo == 'title'}" th:value="${titledescriptioninfo}" selected="selected">Title</option>
+						<option th:unless="${titledescriptioninfo == 'title'}" value="title" >Title</option>
+						
+						<option th:if="${titledescriptioninfo == 'description'}" th:value="${titledescriptioninfo}" selected="selected">Description</option>
+						<option th:unless="${titledescriptioninfo == 'description'}" value="description" >Description</option>
+						
+						<option th:if="${titledescriptioninfo == 'both'}" th:value="${titledescriptioninfo}" selected="selected">Both</option>
+						<option th:unless="${titledescriptioninfo == 'both'}" value="both" >Both</option>
 					</select>
 				</div>
 				<div class="input-field col s4">
 					<label for="titledescriptionkeyword" class="active">keywords</label>
 					<input id="titledescriptionkeyword" type="text" name="titledescriptionkeyword" class="validate" th:value="${titledescriptionkeyword}">
-<!-- 				<input id="titledescriptionkeyword" type="text" name="titledescriptionkeyword" class="validate"> -->
 				</div>
 			</div>
 			<div class="row">
@@ -149,17 +158,27 @@
 					<label for="statusinfo" class="active">Status</label>
 					<select class="browser-default" name="statusinfo" id="statusinfo" th:value="${statusinfo}">
 						<option value="" selected="selected">Choose</option>
-						<option value="OPEN" th:text="OPEN"></option>
-						<option value="CLOSED" th:text="CLOSED"></option>
+						
+						<option th:if="${statusinfo == 'OPEN'}" th:value="${statusinfo}" selected="selected">OPEN</option>
+						<option th:unless="${statusinfo == 'OPEN'}" value="OPEN" >OPEN</option>
+						
+						<option th:if="${statusinfo == 'CLOSED'}" th:value="${statusinfo}" selected="selected">CLOSED</option>
+						<option th:unless="${statusinfo == 'CLOSED'}" value="CLOSED" >CLOSED</option>
+						
 					</select>
 				</div>	
 				<div class="input-field col s4">
 					<label for="severityinfo" class="active">Severity</label>
 					<select class="browser-default" name="severityinfo" id="severityinfo" th:value="${severityinfo}">
 						<option value="" selected="selected">Choose</option>
-						<option value="LOW_IMPACT" th:text="LOW_IMPACT"></option>
-						<option value="MEDIUM_IMPACT" th:text="MEDIUM_IMPACT"></option>
-						<option value="HIGH_IMPACT" th:text="HIGH_IMPACT"></option>
+						<option th:if="${severityinfo == 'LOW_IMPACT'}" th:value="${severityinfo}" selected="selected">LOW IMPACT</option>
+						<option th:unless="${severityinfo == 'LOW_IMPACT'}" value="LOW_IMPACT" >LOW IMPACT</option>
+						
+						<option th:if="${severityinfo == 'MEDIUM_IMPACT'}" th:value="${severityinfo}" selected="selected">MEDIUM IMPACT</option>
+						<option th:unless="${severityinfo == 'MEDIUM_IMPACT'}" value="MEDIUM_IMPACT" >MEDIUM IMPACT</option>
+						
+						<option th:if="${severityinfo == 'HIGH_IMPACT'}" th:value="${severityinfo}" selected="selected">HIGH IMPACT</option>
+						<option th:unless="${severityinfo == 'HIGH_IMPACT'}" value="HIGH_IMPACT" >HIGH IMPACT</option>
 					</select>
 				</div>
 			</div>
@@ -168,21 +187,21 @@
 					<button class="btn waves-effect waves-teal" type="submit" name="search" style="margin: 0px; left: 0px;">Search</button>
 				</div>
 				<div class="input-field col s1" >
-					<button id="resetbtn" class="btn waves-effect waves-teal" type="reset" name="search" onclick="resetfields()">Clear Form</button>
+					<button id="resetbtn" class="btn waves-effect waves-teal" type="reset" name="search" onclick="resetfields()">Clear</button>
 				</div>
 			</div>
 		</form>
 	</div>
 	</fieldset>
 
-	<div class="row">
-		<form action="/index" method="post">
-			<div class="input-field col s2">
-				<button class="btn waves-effect waves-teal" type="submit" name="search">Clear filtered data</button>
-			</div>
-		</form>
-		
-	</div>
+<!-- removido botao de reset somente dos dados da tabela -->
+<!-- 	<div class="row"> -->
+<!-- 		<form action="/index" method="post"> -->
+<!-- 			<div class="input-field col s2"> -->
+<!-- 				<button class="btn waves-effect waves-teal" type="submit" name="search">Clear filtered data</button> -->
+<!-- 			</div> -->
+<!-- 		</form> -->
+<!-- 	</div> -->
 
 	<div class="row" style="box-sizing: content-box;">
 		<div class="input-field col s12">
@@ -332,7 +351,8 @@
 	$(".browser-default").chosen({width: "100%"});
 	
 	function resetfields(){
-		$(".browser-default").val('').trigger("chosen:updated");
+// 		$(".browser-default").val('').trigger("chosen:updated");
+		window.location.replace("/index");
 	}
 	
 </script>
