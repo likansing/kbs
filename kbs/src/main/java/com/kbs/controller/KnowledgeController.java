@@ -5,12 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -20,7 +24,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -61,20 +64,28 @@ public class KnowledgeController {
 	public ModelAndView index() {
 		ModelAndView modelAndView = new ModelAndView("/index");
 		
-		int currentPage = 1;
-		Page<Knowledge> page = service.listAll(currentPage);
-		long totalItems = page.getTotalElements();
-		int totalPages = page.getTotalPages();
-		List<Knowledge> knowledgeList = page.getContent();
+//		anterior
+//		int currentPage = 1;
+//		Page<Knowledge> page = service.listAll(currentPage);
+//		long totalItems = page.getTotalElements();
+//		int totalPages = page.getTotalPages();
+//		List<Knowledge> knowledgeList = page.getContent();
+//		modelAndView.addObject("currentPage", currentPage);
+//		modelAndView.addObject("totalItems", totalItems);
+//		modelAndView.addObject("totalPages", totalPages);
+//		
+//		modelAndView.addObject("knowledgeList", knowledgeList);
+//		modelAndView.addObject("commodities", commodityRepository.findAll());
+//		modelAndView.addObject("knowledgeObj", new Knowledge());
+//		modelAndView.addObject("countries", regionCountryRepository.findAll());
+//		return modelAndView;
+//		fim
 		
+			
+//		novo
 //		Iterable<Knowledge> knowledgeIterator = knowledgeRepository.sortAllByIdOrderByDESC();
-//		modelAndView.addObject("knowledgeList", knowledgeIterator);
 		
-		modelAndView.addObject("currentPage", currentPage);
-		modelAndView.addObject("totalItems", totalItems);
-		modelAndView.addObject("totalPages", totalPages);
-		
-		modelAndView.addObject("knowledgeList", knowledgeList);
+		modelAndView.addObject("knowledgeList", knowledgeRepository.findAll(PageRequest.of(0, 5, Sort.by("id").descending())));
 		modelAndView.addObject("commodities", commodityRepository.findAll());
 		modelAndView.addObject("knowledgeObj", new Knowledge());
 		modelAndView.addObject("countries", regionCountryRepository.findAll());
@@ -83,46 +94,59 @@ public class KnowledgeController {
 
 	@RequestMapping("**/index")
 	public ModelAndView index2() {
-ModelAndView modelAndView = new ModelAndView("/index");
+		ModelAndView modelAndView = new ModelAndView("/index");
 		
-		int currentPage = 1;
-		Page<Knowledge> page = service.listAll(currentPage);
-		long totalItems = page.getTotalElements();
-		int totalPages = page.getTotalPages();
-		List<Knowledge> knowledgeList = page.getContent();
+//		anterior
+//		int currentPage = 1;
+//		Page<Knowledge> page = service.listAll(currentPage);
+//		long totalItems = page.getTotalElements();
+//		int totalPages = page.getTotalPages();
+//		List<Knowledge> knowledgeList = page.getContent();
+//		modelAndView.addObject("currentPage", currentPage);
+//		modelAndView.addObject("totalItems", totalItems);
+//		modelAndView.addObject("totalPages", totalPages);
+//		
+//		modelAndView.addObject("knowledgeList", knowledgeList);
+//		modelAndView.addObject("commodities", commodityRepository.findAll());
+//		modelAndView.addObject("knowledgeObj", new Knowledge());
+//		modelAndView.addObject("countries", regionCountryRepository.findAll());
+//		return modelAndView;
+//		fim
 		
+			
+//		novo
 //		Iterable<Knowledge> knowledgeIterator = knowledgeRepository.sortAllByIdOrderByDESC();
-//		modelAndView.addObject("knowledgeList", knowledgeIterator);
 		
-		modelAndView.addObject("currentPage", currentPage);
-		modelAndView.addObject("totalItems", totalItems);
-		modelAndView.addObject("totalPages", totalPages);
-		
-		modelAndView.addObject("knowledgeList", knowledgeList);
+		modelAndView.addObject("knowledgeList", knowledgeRepository.findAll(PageRequest.of(0, 5, Sort.by("id").descending())));
 		modelAndView.addObject("commodities", commodityRepository.findAll());
 		modelAndView.addObject("knowledgeObj", new Knowledge());
 		modelAndView.addObject("countries", regionCountryRepository.findAll());
 		return modelAndView;
 	}
 	
+	
+	
 	@GetMapping("**/page/{pageNumber}")
 	public ModelAndView knowledgePaginatorLoader(@PathVariable("pageNumber") int currentPage) {
 		
 		ModelAndView modelAndView = new ModelAndView("/index");
 		
-		Page<Knowledge> page = service.listAll(currentPage);
-		long totalItems = page.getTotalElements();
-		int totalPages = page.getTotalPages();
-		List<Knowledge> knowledgeList = page.getContent();
+//		Page<Knowledge> page = service.listAll(currentPage);
+//		long totalItems = page.getTotalElements();
+//		int totalPages = page.getTotalPages();
+//		List<Knowledge> knowledgeList = page.getContent();
+//		
+////		Iterable<Knowledge> knowledgeIterator = knowledgeRepository.sortAllByIdOrderByDESC();
+////		modelAndView.addObject("knowledgeList", knowledgeIterator);
+//		
+//		modelAndView.addObject("currentPage", currentPage);
+//		modelAndView.addObject("totalItems", totalItems);
+//		modelAndView.addObject("totalPages", totalPages);
+//		
+//		modelAndView.addObject("knowledgeList", knowledgeList);
+//		fim
 		
-//		Iterable<Knowledge> knowledgeIterator = knowledgeRepository.sortAllByIdOrderByDESC();
-//		modelAndView.addObject("knowledgeList", knowledgeIterator);
-		
-		modelAndView.addObject("currentPage", currentPage);
-		modelAndView.addObject("totalItems", totalItems);
-		modelAndView.addObject("totalPages", totalPages);
-		
-		modelAndView.addObject("knowledgeList", knowledgeList);
+		modelAndView.addObject("knowledgeList", knowledgeRepository.findAll(PageRequest.of(0, 5, Sort.by("id").descending())));
 		modelAndView.addObject("commodities", commodityRepository.findAll());
 		modelAndView.addObject("knowledgeObj", new Knowledge());
 		modelAndView.addObject("countries", regionCountryRepository.findAll());
@@ -144,7 +168,6 @@ ModelAndView modelAndView = new ModelAndView("/index");
 		}
 		
 		modelAndView.addObject("platforms", platforms);
-//		modelAndView.addObject("platforms", platformRepository.findAll()); old from 23/abril rev3
 		modelAndView.addObject("commodities", commodityRepository.findAll());
 		modelAndView.addObject("countries", regionCountryRepository.findAll());
 		return modelAndView;
@@ -191,43 +214,32 @@ ModelAndView modelAndView = new ModelAndView("/index");
 		knowledgeRepository.save(knowledge);
 		
 		
-		int currentPage = 1;
-		Page<Knowledge> page = service.listAll(currentPage);
-		long totalItems = page.getTotalElements();
-		int totalPages = page.getTotalPages();
-		List<Knowledge> knowledgeList = page.getContent();
-		
-//		Iterable<Knowledge> knowledgeIterator = knowledgeRepository.sortAllByIdOrderByDESC();
-//		modelAndView.addObject("knowledgeList", knowledgeIterator);
+//		int currentPage = 1;
+//		Page<Knowledge> page = service.listAll(currentPage);
+//		long totalItems = page.getTotalElements();
+//		int totalPages = page.getTotalPages();
+//		List<Knowledge> knowledgeList = page.getContent();
+//		
+////		Iterable<Knowledge> knowledgeIterator = knowledgeRepository.sortAllByIdOrderByDESC();
+////		modelAndView.addObject("knowledgeList", knowledgeIterator);
+//		
+//		ModelAndView modelAndView = new ModelAndView("/index");
+//		modelAndView.addObject("currentPage", currentPage);
+//		modelAndView.addObject("totalItems", totalItems);
+//		modelAndView.addObject("totalPages", totalPages);
+//		
+//		modelAndView.addObject("knowledgeList", knowledgeList);
+//		fim
 		
 		ModelAndView modelAndView = new ModelAndView("/index");
-		modelAndView.addObject("currentPage", currentPage);
-		modelAndView.addObject("totalItems", totalItems);
-		modelAndView.addObject("totalPages", totalPages);
-		
-		modelAndView.addObject("knowledgeList", knowledgeList);
+		modelAndView.addObject("knowledgeList", knowledgeRepository.findAll(PageRequest.of(0, 5, Sort.by("id").descending())));
 		modelAndView.addObject("commodities", commodityRepository.findAll());
 		modelAndView.addObject("knowledgeObj", new Knowledge());
 		modelAndView.addObject("countries", regionCountryRepository.findAll());
 		return modelAndView;
 		
-//		modelAndView.addObject("knowledgeList", knowledgeRepository.findAll(PageRequest.of(0, 5,Sort.by("id").descending())));
-//		Iterable<Knowledge> knowledgeIterator = knowledgeRepository.sortAllByIdOrderByDESC();
-//		modelAndView.addObject("knowledgeList", knowledgeIterator);
-//		modelAndView.addObject("commodities", commodityRepository.findAll());
-//		modelAndView.addObject("knowledgeObj", new Knowledge());
-//		modelAndView.addObject("countries", regionCountryRepository.findAll());
-//		return modelAndView;
 	}
 
-	// nao listando na tela de cadastro
-//	@RequestMapping(method = RequestMethod.GET, value = "/listknowledge")
-//	public ModelAndView listknowledge() {
-//		ModelAndView modelAndView = new ModelAndView("register/registerknowledge");
-//		Iterable<Knowledge> knowledgeIterator = knowledgeRepository.findAll();
-//		modelAndView.addObject("knowledgeList", knowledgeIterator);
-//		return modelAndView;
-//	}
 
 	@GetMapping("**/editknowledge/{knowledgeItemId}")
 	public ModelAndView editKnowledge(@PathVariable("knowledgeItemId") Long knowledgeItemId) {
@@ -272,41 +284,116 @@ ModelAndView modelAndView = new ModelAndView("/index");
 
 		ModelAndView modelAndView = new ModelAndView("/index");
 			
-		int currentPage = 1;
-		Page<Knowledge> page = service.listAll(currentPage);
-		long totalItems = page.getTotalElements();
-		int totalPages = page.getTotalPages();
-		List<Knowledge> knowledgeList = page.getContent();
+//		int currentPage = 1;
+//		Page<Knowledge> page = service.listAll(currentPage);
+//		long totalItems = page.getTotalElements();
+//		int totalPages = page.getTotalPages();
+//		List<Knowledge> knowledgeList = page.getContent();
+//		
+//		modelAndView.addObject("currentPage", currentPage);
+//		modelAndView.addObject("totalItems", totalItems);
+//		modelAndView.addObject("totalPages", totalPages);
+//			
+//		modelAndView.addObject("knowledgeList", knowledgeList);
+//		fim
 		
-		modelAndView.addObject("currentPage", currentPage);
-		modelAndView.addObject("totalItems", totalItems);
-		modelAndView.addObject("totalPages", totalPages);
-			
-		modelAndView.addObject("knowledgeList", knowledgeList);
+		modelAndView.addObject("knowledgeList", knowledgeRepository.findAll(PageRequest.of(0, 5, Sort.by("id").descending())));
 		modelAndView.addObject("commodities", commodityRepository.findAll());
 		modelAndView.addObject("knowledgeObj", new Knowledge());
 		modelAndView.addObject("countries", regionCountryRepository.findAll());
 		return modelAndView;
 		
-//		ModelAndView modelAndView = new ModelAndView("/index");
-////		modelAndView.addObject("knowledgeList", knowledgeRepository.findAll(PageRequest.of(0, 5,Sort.by("id").descending())));
-//		Iterable<Knowledge> knowledgeIterator = knowledgeRepository.sortAllByIdOrderByDESC();
-//		modelAndView.addObject("knowledgeList", knowledgeIterator);
-//		modelAndView.addObject("commodities", commodityRepository.findAll());
-//		modelAndView.addObject("knowledgeObj", new Knowledge());
-//		modelAndView.addObject("countries", regionCountryRepository.findAll());
-//		return modelAndView;
 	}
 
-	@PostMapping("**/searchknowledge")
-	public ModelAndView search(@RequestParam("searchWord") String searchWord, //campo livre de digitacao para busca
+	@GetMapping("**/pag")
+	public ModelAndView paginacao(@PageableDefault(size = 5,sort = "id",direction = Direction.DESC) Pageable pageable, ModelAndView model,
+			@RequestParam("searchWord") String searchWord, //campo livre de digitacao para busca de platform
 			@RequestParam("platforminfo") String platforminfo, //recebe string sendo platformName, marketName ou sysid
 			@RequestParam("countryinfo") String countryinfo,     //recebe id do pais em string
 			@RequestParam("commodityinfo") String commodityinfo, // recebe id da commmodity em string
-			@RequestParam("statusinfo") String statusinfo,  // recebe String OPEN or CLLOSED
+			@RequestParam("statusinfo") String statusinfo,  // recebe String OPEN or CLOSED
 			@RequestParam("severityinfo") String severityinfo,     // recebe String LOW_IMPACY, MEDIUM_IMPACT OR HIGH_IMPACT
 			@RequestParam("titledescriptioninfo") String titledescriptioninfo,	//recebe String do campo title and or Description (title, description or both)
-			@RequestParam("titledescriptionkeyword") String titledescriptionkeyword){   //campo lire de tile ou description
+			@RequestParam("titledescriptionkeyword") String titledescriptionkeyword){    //campo lire de tile ou description
+			
+		
+		
+		Knowledge k = new Knowledge();
+		Commodity c = new Commodity();
+		RegionCountry rc = new RegionCountry();
+		Platform p = new Platform();
+		Iterable<Platform> platList = null;
+		
+		if(commodityinfo != null && !commodityinfo.isEmpty()) {
+			c = commodityRepository.findById(Long.parseLong(commodityinfo)).get();
+		}
+		
+		if(countryinfo != null && !countryinfo.isEmpty()) {
+			rc = regionCountryRepository.findById(Long.parseLong(countryinfo)).get();
+		}
+		
+		//platforminfo recebe string sendo platformName, marketName ou sysid
+		// searchWord contem o digitado para busca
+		
+		if(platforminfo != null && platforminfo.equalsIgnoreCase("platformName")) {
+//			platList = platformRepository.searchPlatformByName(searchWord);			
+			p.setPlatformName(searchWord);
+		} else if(platforminfo != null && platforminfo.equalsIgnoreCase("marketName")) {
+//			platList = platformRepository.searchPlatformByMarketName(searchWord);
+			p.setMarketName(searchWord);
+		} else if(platforminfo != null && platforminfo.equalsIgnoreCase("sysid")) {
+//			platList = platformRepository.searchPlatformBySysid(searchWord);
+			p.setSysid(searchWord);
+		}
+		
+		//recebe String do campo title and or Description (title, description or both)
+		if(titledescriptioninfo != null && titledescriptioninfo.equalsIgnoreCase("title")) {
+			k.setTitle(titledescriptionkeyword);
+		} else if (titledescriptioninfo != null && titledescriptioninfo.equalsIgnoreCase("description")) {
+			k.setDescription(titledescriptionkeyword);
+		} else if (titledescriptioninfo != null && titledescriptioninfo.equalsIgnoreCase("both")){
+			k.setTitle(titledescriptionkeyword);
+			k.setDescription(titledescriptionkeyword);
+		}
+		
+		// recebe String OPEN or CLOSED
+		if(statusinfo != null && !statusinfo.isEmpty()) {
+			k.setStatus(statusinfo);
+		}
+				
+		// recebe String LOW_IMPACY, MEDIUM_IMPACT OR HIGH_IMPACT
+		if(severityinfo != null && !severityinfo.isEmpty()) {
+			k.setSeverity(severityinfo);
+		}
+		
+//		Page<Knowledge> pageKnowledge = knowledgeRepository.findKnowledgeByPage(k, c, platList, rc, pageable);
+		Page<Knowledge> pageKnowledge = knowledgeRepository.findKnowledgeByPage(k, c, p, rc, pageable);
+		model.addObject("knowledgeList", pageKnowledge);
+		model.addObject("commodities", commodityRepository.findAll());
+		model.addObject("knowledgeObj", new Knowledge());
+		model.addObject("countries", regionCountryRepository.findAll());
+		model.addObject("searchWord", searchWord);
+		model.addObject("platforminfo", platforminfo);
+		model.addObject("titledescriptioninfo", titledescriptioninfo);
+		model.addObject("titledescriptionkeyword", titledescriptionkeyword);
+		model.addObject("commodityinfo", commodityinfo);
+		model.addObject("countryinfo", countryinfo);
+		model.addObject("statusinfo", statusinfo);
+		model.addObject("severityinfo", severityinfo);
+		model.setViewName("index");
+		return model;
+	}
+	
+	@PostMapping("**/searchknowledge")
+	public ModelAndView search(@RequestParam("searchWord") String searchWord, //campo livre de digitacao para busca de platform
+			@RequestParam("platforminfo") String platforminfo, //recebe string sendo platformName, marketName ou sysid
+			@RequestParam("countryinfo") String countryinfo,     //recebe id do pais em string
+			@RequestParam("commodityinfo") String commodityinfo, // recebe id da commmodity em string
+			@RequestParam("statusinfo") String statusinfo,  // recebe String OPEN or CLOSED
+			@RequestParam("severityinfo") String severityinfo,     // recebe String LOW_IMPACY, MEDIUM_IMPACT OR HIGH_IMPACT
+			@RequestParam("titledescriptioninfo") String titledescriptioninfo,	//recebe String do campo title and or Description (title, description or both)
+			@RequestParam("titledescriptionkeyword") String titledescriptionkeyword,    //campo lire de tile ou description
+			@PageableDefault(size = 5, sort = "id",direction = Direction.DESC) Pageable pageable){   
 
 		//@PathVariable("pageNumber") int currentPage
 		
@@ -337,39 +424,27 @@ ModelAndView modelAndView = new ModelAndView("/index");
 				busca.append(" LIKE LOWER ('%" + searchWord + "%')");
 			} else {
 				
-				int currentPage = 1;
-				Page<Knowledge> page = service.listAll(currentPage);
-				long totalItems = page.getTotalElements();
-				int totalPages = page.getTotalPages();
-				List<Knowledge> knowledgeList = page.getContent();
+//				int currentPage = 1;
+//				Page<Knowledge> page = service.listAll(currentPage);
+//				long totalItems = page.getTotalElements();
+//				int totalPages = page.getTotalPages();
+//				List<Knowledge> knowledgeList = page.getContent();
+//				
+//				modelAndView.addObject("currentPage", currentPage);
+//				modelAndView.addObject("totalItems", totalItems);
+//				modelAndView.addObject("totalPages", totalPages);
+//				modelAndView.addObject("knowledgeList", knowledgeList);
+//				fim
 				
-				modelAndView.addObject("currentPage", currentPage);
-				modelAndView.addObject("totalItems", totalItems);
-				modelAndView.addObject("totalPages", totalPages);
+				modelAndView.addObject("knowledgeList", knowledgeRepository.findAll(PageRequest.of(0, 5, Sort.by("id").descending())));
 				modelAndView.addObject("msg", "Searching by Platform information and not inputing any keyword to filter data will list all by default.");
-				modelAndView.addObject("knowledgeList", knowledgeList);
 				modelAndView.addObject("commodities", commodityRepository.findAll());
 				modelAndView.addObject("knowledgeObj", new Knowledge());
 				modelAndView.addObject("countries", regionCountryRepository.findAll());
+				modelAndView.addObject("searchWord", searchWord);
+				modelAndView.addObject("platforminfo", platforminfo);
 				return modelAndView;
 				
-//				modelAndView.addObject("knowledgeList", knowledgeRepository.findAll(PageRequest.of(0, 5,Sort.by("id").descending())));
-//				Iterable<Knowledge> knowledgeIterator = knowledgeRepository.sortAllByIdOrderByDESC();
-//				modelAndView.addObject("knowledgeList", knowledgeIterator);
-//				modelAndView.addObject("msg", "Searching by Platform information and not inputing any keyword to filter data will list all by default.");
-//				modelAndView.addObject("commodities", commodityRepository.findAll());
-//				modelAndView.addObject("knowledgeObj", new Knowledge()); //add
-//				modelAndView.addObject("countries", regionCountryRepository.findAll());
-//				
-//				modelAndView.addObject("platforminfo", platforminfo);
-//				modelAndView.addObject("searchWord", searchWord);
-//				modelAndView.addObject("titledescriptioninfo", titledescriptioninfo);
-//				modelAndView.addObject("titledescriptionkeyword", titledescriptionkeyword);
-//				modelAndView.addObject("commodityinfo", commodityinfo);
-//				modelAndView.addObject("countryinfo", countryinfo);
-//				modelAndView.addObject("statusinfo", statusinfo);
-//				modelAndView.addObject("severityinfo", severityinfo);
-//				return modelAndView;
 			}
 		}
 		
@@ -390,39 +465,27 @@ ModelAndView modelAndView = new ModelAndView("/index");
 				}
 			} else {
 				
-				int currentPage = 1;
-				Page<Knowledge> page = service.listAll(currentPage);
-				long totalItems = page.getTotalElements();
-				int totalPages = page.getTotalPages();
-				List<Knowledge> knowledgeList = page.getContent();
+//				int currentPage = 1;
+//				Page<Knowledge> page = service.listAll(currentPage);
+//				long totalItems = page.getTotalElements();
+//				int totalPages = page.getTotalPages();
+//				List<Knowledge> knowledgeList = page.getContent();
+//				
+//				modelAndView.addObject("currentPage", currentPage);
+//				modelAndView.addObject("totalItems", totalItems);
+//				modelAndView.addObject("totalPages", totalPages);
+//				modelAndView.addObject("msg", "Searching by Title and or Description information and not inputing any keyword to filter data will list all by default.");
+//				modelAndView.addObject("knowledgeList", knowledgeList);
+//				fim
 				
-				modelAndView.addObject("currentPage", currentPage);
-				modelAndView.addObject("totalItems", totalItems);
-				modelAndView.addObject("totalPages", totalPages);
-				modelAndView.addObject("msg", "Searching by Title and or Description information and not inputing any keyword to filter data will list all by default.");
-				modelAndView.addObject("knowledgeList", knowledgeList);
+				modelAndView.addObject("knowledgeList", knowledgeRepository.findAll(PageRequest.of(0, 5, Sort.by("id").descending())));
 				modelAndView.addObject("commodities", commodityRepository.findAll());
 				modelAndView.addObject("knowledgeObj", new Knowledge());
 				modelAndView.addObject("countries", regionCountryRepository.findAll());
+				modelAndView.addObject("searchWord", searchWord);
+				modelAndView.addObject("platforminfo", platforminfo);
 				return modelAndView;
 				
-//				modelAndView.addObject("knowledgeList", knowledgeRepository.findAll(PageRequest.of(0, 5,Sort.by("id").descending())));
-//				Iterable<Knowledge> knowledgeIterator = knowledgeRepository.sortAllByIdOrderByDESC();
-//				modelAndView.addObject("knowledgeList", knowledgeIterator);
-//				modelAndView.addObject("msg", "Searching by Title and or Description information and not inputing any keyword to filter data will list all by default.");
-//				modelAndView.addObject("commodities", commodityRepository.findAll());
-//				modelAndView.addObject("knowledgeObj", new Knowledge()); //add
-//				modelAndView.addObject("countries", regionCountryRepository.findAll());
-//				
-//				modelAndView.addObject("platforminfo", platforminfo);
-//				modelAndView.addObject("searchWord", searchWord);
-//				modelAndView.addObject("titledescriptioninfo", titledescriptioninfo);
-//				modelAndView.addObject("titledescriptionkeyword", titledescriptionkeyword);
-//				modelAndView.addObject("commodityinfo", commodityinfo);
-//				modelAndView.addObject("countryinfo", countryinfo);
-//				modelAndView.addObject("statusinfo", statusinfo);
-//				modelAndView.addObject("severityinfo", severityinfo);
-//				return modelAndView;
 			}
 		}
 		
@@ -465,80 +528,88 @@ ModelAndView modelAndView = new ModelAndView("/index");
 		
 		if(controle == 0) {
 			
-			int currentPage = 1;
-			Page<Knowledge> page = service.listAll(currentPage);
-			long totalItems = page.getTotalElements();
-			int totalPages = page.getTotalPages();
-			List<Knowledge> knowledgeList = page.getContent();
+//			int currentPage = 1;
+//			Page<Knowledge> page = service.listAll(currentPage);
+//			long totalItems = page.getTotalElements();
+//			int totalPages = page.getTotalPages();
+//			List<Knowledge> knowledgeList = page.getContent();
+//			
+//			modelAndView.addObject("currentPage", currentPage);
+//			modelAndView.addObject("totalItems", totalItems);
+//			modelAndView.addObject("totalPages", totalPages);
+//			modelAndView.addObject("msg", "Searching by not filtered data list all by default.");
+//			modelAndView.addObject("knowledgeList", knowledgeList);
+//			fim
 			
-			modelAndView.addObject("currentPage", currentPage);
-			modelAndView.addObject("totalItems", totalItems);
-			modelAndView.addObject("totalPages", totalPages);
-			modelAndView.addObject("msg", "Searching by not filtered data list all by default.");
-			modelAndView.addObject("knowledgeList", knowledgeList);
+			modelAndView.addObject("knowledgeList", knowledgeRepository.findAll(PageRequest.of(0, 5, Sort.by("id").descending())));			
 			modelAndView.addObject("commodities", commodityRepository.findAll());
 			modelAndView.addObject("knowledgeObj", new Knowledge());
 			modelAndView.addObject("countries", regionCountryRepository.findAll());
+			modelAndView.addObject("msg", "Searching by not filtered data list all by default.");
+			modelAndView.addObject("searchWord", searchWord);
+			modelAndView.addObject("platforminfo", platforminfo);
 			return modelAndView;
-			
-//			modelAndView.addObject("knowledgeList", knowledgeRepository.findAll(PageRequest.of(0, 5,Sort.by("id").descending())));
-//			Iterable<Knowledge> knowledgeIterator = knowledgeRepository.sortAllByIdOrderByDESC();
-//			modelAndView.addObject("knowledgeList", knowledgeIterator);
-//			modelAndView.addObject("msg", "Searching by not filtered data list all by default.");
-//			modelAndView.addObject("commodities", commodityRepository.findAll());
-//			modelAndView.addObject("knowledgeObj", new Knowledge()); //add
-//			modelAndView.addObject("countries", regionCountryRepository.findAll());
-//			
-//			modelAndView.addObject("platforminfo", platforminfo);
-//			modelAndView.addObject("searchWord", searchWord);
-//			modelAndView.addObject("titledescriptioninfo", titledescriptioninfo);
-//			modelAndView.addObject("titledescriptionkeyword", titledescriptionkeyword);
-//			modelAndView.addObject("commodityinfo", commodityinfo);
-//			modelAndView.addObject("countryinfo", countryinfo);
-//			modelAndView.addObject("statusinfo", statusinfo);
-//			modelAndView.addObject("severityinfo", severityinfo);
-//			return modelAndView;
-		}
+		}		
 		
-		
-		int currentPage = 1;
-		List<Knowledge> filteredList = service.executaHqlDinamicService(sql, currentPage);
-		int totalItems = service.getTotalQtyOfRecord(sql);
-		int totalPages = totalItems / 5;
-		double resto = totalItems % 5;
-		
-		if (resto > 0) {
-			totalPages++;
-		}
-		
-		//List<Knowledge> knowledgeList = page.getContent();
-		
-		modelAndView.addObject("currentPage", currentPage);
-		modelAndView.addObject("totalItems", totalItems);
-		modelAndView.addObject("totalPages", totalPages);
-		modelAndView.addObject("knowledgeList", filteredList);
-		modelAndView.addObject("commodities", commodityRepository.findAll());
-		
-		Platform p = new Platform();
-		p.setMarketName(platforminfo);
-		p.setPlatformName(platforminfo);
-		p.setSysid(platforminfo);
 		Knowledge k = new Knowledge();
-		k.setPlatform(p);
+		Commodity c = new Commodity();
+		RegionCountry rc = new RegionCountry();
+		Platform p = new Platform();
+		Iterable<Platform> platList = null;
 		
+		if(commodityinfo != null && !commodityinfo.isEmpty()) {
+			c = commodityRepository.findById(Long.parseLong(commodityinfo)).get();
+		}
 		
-		modelAndView.addObject("knowledgeObj", k);
+		if(countryinfo != null && !countryinfo.isEmpty()) {
+			rc = regionCountryRepository.findById(Long.parseLong(countryinfo)).get();
+		}
+		
+		//platforminfo recebe string sendo platformName, marketName ou sysid
+		// searchWord contem o digitado para busca
+		
+		if(platforminfo != null && platforminfo.equalsIgnoreCase("platformName")) {
+//			platList = platformRepository.searchPlatformByName(searchWord);			
+			p.setPlatformName(searchWord);
+		} else if(platforminfo != null && platforminfo.equalsIgnoreCase("marketName")) {
+//			platList = platformRepository.searchPlatformByMarketName(searchWord);
+			p.setMarketName(searchWord);
+		} else if(platforminfo != null && platforminfo.equalsIgnoreCase("sysid")) {
+//			platList = platformRepository.searchPlatformBySysid(searchWord);
+			p.setSysid(searchWord);
+		}
+		
+		//recebe String do campo title and or Description (title, description or both)
+		if(titledescriptioninfo != null && titledescriptioninfo.equalsIgnoreCase("title")) {
+			k.setTitle(titledescriptionkeyword);
+		} else if (titledescriptioninfo != null && titledescriptioninfo.equalsIgnoreCase("description")) {
+			k.setDescription(titledescriptionkeyword);
+		} else if (titledescriptioninfo != null && titledescriptioninfo.equalsIgnoreCase("both")){
+			k.setTitle(titledescriptionkeyword);
+			k.setDescription(titledescriptionkeyword);
+		}
+		
+		// recebe String OPEN or CLOSED
+		if(statusinfo != null && !statusinfo.isEmpty()) {
+			k.setStatus(statusinfo);
+		}
+				
+		// recebe String LOW_IMPACY, MEDIUM_IMPACT OR HIGH_IMPACT
+		if(severityinfo != null && !severityinfo.isEmpty()) {
+			k.setSeverity(severityinfo);
+		}
+		
+		Page<Knowledge> filteredList = null;
+		
+//		filteredList = knowledgeRepository.findKnowledgeByPage(k, c, platList, rc, pageable);
+		filteredList = knowledgeRepository.findKnowledgeByPage(k, c, p, rc, pageable);
+		
+		modelAndView.addObject("knowledgeList", filteredList);
+		modelAndView.addObject("knowledgeObj", new Knowledge());
+		modelAndView.addObject("commodities", commodityRepository.findAll());
 		modelAndView.addObject("countries", regionCountryRepository.findAll());
-//		return modelAndView;
-		
-		
-//		List<Knowledge> filteredList = (List<Knowledge>) dinamicHql.executaHqlDinamic(sql);
-//		modelAndView.addObject("knowledgeList", filteredList);
-//		modelAndView.addObject("commodities", commodityRepository.findAll());
-//		modelAndView.addObject("knowledgeObj", new Knowledge()); //add to try to keep option os filter (not working so far)
-//		modelAndView.addObject("countries", regionCountryRepository.findAll());
-		modelAndView.addObject("platforminfo", platforminfo);
 		modelAndView.addObject("searchWord", searchWord);
+		modelAndView.addObject("platforminfo", platforminfo);
 		modelAndView.addObject("titledescriptioninfo", titledescriptioninfo);
 		modelAndView.addObject("titledescriptionkeyword", titledescriptionkeyword);
 		modelAndView.addObject("commodityinfo", commodityinfo);
@@ -546,6 +617,55 @@ ModelAndView modelAndView = new ModelAndView("/index");
 		modelAndView.addObject("statusinfo", statusinfo);
 		modelAndView.addObject("severityinfo", severityinfo);
 		return modelAndView;
+		
+		
+//		inicio
+//		int currentPage = 1;
+//		List<Knowledge> filteredList = service.executaHqlDinamicService(sql, currentPage);
+//		int totalItems = service.getTotalQtyOfRecord(sql);
+//		int totalPages = totalItems / 5;
+//		double resto = totalItems % 5;
+//		
+//		if (resto > 0) {
+//			totalPages++;
+//		}
+//		
+//		//List<Knowledge> knowledgeList = page.getContent();
+//		
+//		modelAndView.addObject("currentPage", currentPage);
+//		modelAndView.addObject("totalItems", totalItems);
+//		modelAndView.addObject("totalPages", totalPages);
+//		modelAndView.addObject("knowledgeList", filteredList);
+//		modelAndView.addObject("commodities", commodityRepository.findAll());
+//		
+//		Platform p = new Platform();
+//		p.setMarketName(platforminfo);
+//		p.setPlatformName(platforminfo);
+//		p.setSysid(platforminfo);
+//		Knowledge k = new Knowledge();
+//		k.setPlatform(p);
+//		
+//		
+//		modelAndView.addObject("knowledgeObj", k);
+//		modelAndView.addObject("countries", regionCountryRepository.findAll());
+////		return modelAndView;
+//		
+//		
+////		List<Knowledge> filteredList = (List<Knowledge>) dinamicHql.executaHqlDinamic(sql);
+////		modelAndView.addObject("knowledgeList", filteredList);
+////		modelAndView.addObject("commodities", commodityRepository.findAll());
+////		modelAndView.addObject("knowledgeObj", new Knowledge()); //add to try to keep option os filter (not working so far)
+////		modelAndView.addObject("countries", regionCountryRepository.findAll());
+//		modelAndView.addObject("platforminfo", platforminfo);
+//		modelAndView.addObject("searchWord", searchWord);
+//		modelAndView.addObject("titledescriptioninfo", titledescriptioninfo);
+//		modelAndView.addObject("titledescriptionkeyword", titledescriptionkeyword);
+//		modelAndView.addObject("commodityinfo", commodityinfo);
+//		modelAndView.addObject("countryinfo", countryinfo);
+//		modelAndView.addObject("statusinfo", statusinfo);
+//		modelAndView.addObject("severityinfo", severityinfo);
+//		return modelAndView;
+//		fim
 		
 	}
 
@@ -558,14 +678,13 @@ ModelAndView modelAndView = new ModelAndView("/index");
 		modelAndView.addObject("knowledgeObj", knowledge.get());
 		return modelAndView;
 	}
-	//, produces = MediaType.APPLICATION_JSON_VALUE
-	@RequestMapping(value = "**/productchange", method = RequestMethod.POST)
-	@ResponseBody
-	public String updatePlatformMarktnameCombo (HttpServletRequest req, HttpServletResponse res) {
-		
-		Optional<Platform> platform = platformRepository.findById(Long.parseLong(req.getParameter("id")));
-		return platform.get().toString();
-	}
-	
+//	//, produces = MediaType.APPLICATION_JSON_VALUE
+//	@RequestMapping(value = "**/productchange", method = RequestMethod.POST)
+//	@ResponseBody
+//	public String updatePlatformMarktnameCombo (HttpServletRequest req, HttpServletResponse res) {
+//		
+//		Optional<Platform> platform = platformRepository.findById(Long.parseLong(req.getParameter("id")));
+//		return platform.get().toString();
+//	}
 
 }

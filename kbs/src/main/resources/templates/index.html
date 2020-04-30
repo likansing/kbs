@@ -124,8 +124,8 @@
 				</div>
 				<div class="input-field col s4">
 					<label for="titledescriptionkeyword" class="active">keywords</label>
-<!-- 					<input id="titledescriptionkeyword" type="text" name="titledescriptionkeyword" class="validate" th:value="${titledescriptionkeyword}"> -->
-						<input id="titledescriptionkeyword" type="text" name="titledescriptionkeyword" class="validate">
+					<input id="titledescriptionkeyword" type="text" name="titledescriptionkeyword" class="validate" th:value="${titledescriptionkeyword}">
+<!-- 				<input id="titledescriptionkeyword" type="text" name="titledescriptionkeyword" class="validate"> -->
 				</div>
 			</div>
 			<div class="row">
@@ -155,7 +155,7 @@
 				</div>	
 				<div class="input-field col s4">
 					<label for="severityinfo" class="active">Severity</label>
-					<select class="browser-default" name="severityinfo" id="severityinfo">
+					<select class="browser-default" name="severityinfo" id="severityinfo" th:value="${severityinfo}">
 						<option value="" selected="selected">Choose</option>
 						<option value="LOW_IMPACT" th:text="LOW_IMPACT"></option>
 						<option value="MEDIUM_IMPACT" th:text="MEDIUM_IMPACT"></option>
@@ -219,9 +219,7 @@
 				
 			</tr>
 		</thead>
-		<!-- Content para pegar o conteudo da lista -->
-<!-- 		<tr th:each = "knowledgeItem : ${knowledgeList.content}"> -->
-		<tr th:each = "knowledgeItem : ${knowledgeList}">
+		<tr th:each = "knowledgeItem : ${knowledgeList.content}">
 			<td><a th:href="@{/viewknowledge/{knowledgeItemId}(knowledgeItemId=${knowledgeItem.id})}"><span th:text="${knowledgeItem.id}"></span></a></td>
 			<td><a th:href="@{/viewknowledge/{knowledgeItemId}(knowledgeItemId=${knowledgeItem.id})}"><span th:text = "${knowledgeItem.title}"></span></a></td>
 			<td><a th:href="@{/viewknowledge/{knowledgeItemId}(knowledgeItemId=${knowledgeItem.id})}"><span th:text = "${knowledgeItem.description}"></span></a></td>
@@ -244,73 +242,84 @@
 	</table>
 	
 	<div>&nbsp;</div>
-	<div>
-		Total Items: [[${totalItems}]] - Page [[${currentPage}]] of [[${totalPages}]]
-		&nbsp; - &nbsp;
+	
+	<div class="row" style="text-align: center;">
 		
-		<a th:if="${currentPage > 1}" th:href="@{/page/1}">First</a>
-		<span th:unless="${currentPage > 1}">First</span>
-
-		&nbsp;
-
-		<a th:if="${currentPage > 1}" th:href="@{'/page/' + ${currentPage -1}}">Previous</a>
-		<span th:unless="${currentPage > 1}">Previous</span>
+		Total Items: [[${knowledgeList.totalElements}]]&nbsp;-&nbsp;Page [[${knowledgeList.number+1}]] of [[${knowledgeList.totalPages}]]
+		&nbsp;-&nbsp;
 		
-		&nbsp;&nbsp;&nbsp;
 		
-		<span th:each="i: ${#numbers.sequence(1, totalPages)}">
-			<a th:if="${i != currentPage}" th:href="@{'/page/' + ${i}}">[[${i}]]</a>
-			<span th:unless="${i != currentPage}">[[${i}]]</span>
-			&nbsp;&nbsp;
+		<a th:if="${knowledgeList.number+1 > 1}" th:href="@{/pag(page=0, size=${knowledgeList.size}, searchWord=${searchWord}, platforminfo=${platforminfo},
+			countryinfo=${countryinfo}, commodityinfo=${commodityinfo}, statusinfo=${statusinfo}, severityinfo=${severityinfo},
+			titledescriptioninfo=${titledescriptioninfo}, titledescriptionkeyword=${titledescriptionkeyword})}">First</a>
+		<span th:unless="${knowledgeList.number+1 > 1}">First</span>
+		&nbsp;&nbsp;
+		
+		<span th:if="${knowledgeList.hasPrevious()}">
+			<a th:href="@{/pag(page=${knowledgeList.number-1}, size=${knowledgeList.size}, searchWord=${searchWord}, platforminfo=${platforminfo},
+			countryinfo=${countryinfo}, commodityinfo=${commodityinfo}, statusinfo=${statusinfo}, severityinfo=${severityinfo},
+			titledescriptioninfo=${titledescriptioninfo}, titledescriptionkeyword=${titledescriptionkeyword})}">Back</a>
 		</span>
+		<span th:unless="${knowledgeList.hasPrevious()}">Back</span>
+		&nbsp;&nbsp;
+	
+		<th:block th:each="i: ${#numbers.sequence(0, knowledgeList.totalPages - 1)}">
+			<a th:if="${i != knowledgeList.number}" th:href="@{/pag(page=${i}, size=${knowledgeList.size}, searchWord=${searchWord}, platforminfo=${platforminfo},
+			countryinfo=${countryinfo}, commodityinfo=${commodityinfo}, statusinfo=${statusinfo}, severityinfo=${severityinfo},
+			titledescriptioninfo=${titledescriptioninfo}, titledescriptionkeyword=${titledescriptionkeyword})}">[[${i} + 1]]</a>
+			
+			<span th:unless="${i != knowledgeList.number}">[[${i} + 1]]</span>
+ 			&nbsp;&nbsp;
+			
+		</th:block>
 		
-		&nbsp;
+		<span th:if="${knowledgeList.hasNext()}">
+			<a th:href="@{/pag(page=${knowledgeList.number+1}, size=${knowledgeList.size}, searchWord=${searchWord}, platforminfo=${platforminfo},
+			countryinfo=${countryinfo}, commodityinfo=${commodityinfo}, statusinfo=${statusinfo}, severityinfo=${severityinfo},
+			titledescriptioninfo=${titledescriptioninfo}, titledescriptionkeyword=${titledescriptionkeyword})}">Next</a>
+		</span>
+		<span th:unless="${knowledgeList.hasNext()}">Next</span>
+		&nbsp;&nbsp;
 		
-		<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}}">Next</a>
-		<span th:unless="${currentPage < totalPages}">Next</span>
+		<a th:if="${knowledgeList.number+1 < knowledgeList.totalPages}" th:href="@{/pag(page=${knowledgeList.totalPages-1}, size=${knowledgeList.size}, searchWord=${searchWord}, platforminfo=${platforminfo},
+			countryinfo=${countryinfo}, commodityinfo=${commodityinfo}, statusinfo=${statusinfo}, severityinfo=${severityinfo},
+			titledescriptioninfo=${titledescriptioninfo}, titledescriptionkeyword=${titledescriptionkeyword})}">Last</a>
+		<span th:unless="${knowledgeList.number+1 < knowledgeList.totalPages}">Last</span>
 
-		&nbsp;
-
-		<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}}">Last</a>
-		<span th:unless="${currentPage < totalPages}">Last</span>
-		
-		
 	</div>
 	
-	
-<!-- 	<div class="row" style="margin-top: 30px; text-align: center;"> -->
+<!-- 	<div class="row" style="text-align: center;"> -->
+<!-- 		Total Items: [[${totalItems}]] - Page [[${currentPage}]] of [[${totalPages}]] -->
+<!-- 		&nbsp; - &nbsp; -->
+		
+<!-- 		<a th:if="${currentPage > 1}" th:href="@{/page/1}">First</a> -->
+<!-- 		<span th:unless="${currentPage > 1}">First</span> -->
 
-<!-- 		i sera a var de iteracao, #numbers.sequence eh do thymeleaf, totalPages eh do spring data, menos 1 pq retorna array iniciando em 0 -->
-<!-- 		 o (page) e size eh padrao do spring data deve ser pagina , tem que ser 2x conchete -->
-<!-- 		<span th:if="${knowledgeList.hasPrevious()}"> -->
-<!-- 			<a th:href="@{/pageknowledge(page=${knowledgeList.number-1}, size=${knowledgeList.size}, platforminfo=${platforminfo}, searchWord=${searchWord}, -->
-<!-- 			titledescriptioninfo=${titledescriptioninfo}, titledescriptionkeyword=${titledescriptionkeyword}, commodityinfo=${commodityinfo}, countryinfo=${countryinfo}, -->
-<!-- 			statusinfo=${statusinfo}, severityinfo=${severityinfo} )}">back</a> -->
-<!-- 		</span> -->
-<!-- 		<th:block th:each="i: ${#numbers.sequence(0,knowledgeList.totalPages - 1)}"> -->
-<!-- 			<a th:href="@{/pageknowledge(page=${i}, size=${knowledgeList.size}, platforminfo=${platforminfo}, searchWord=${searchWord}, -->
-<!-- 			titledescriptioninfo=${titledescriptioninfo}, titledescriptionkeyword=${titledescriptionkeyword}, commodityinfo=${commodityinfo}, countryinfo=${countryinfo}, -->
-<!-- 			statusinfo=${statusinfo}, severityinfo=${severityinfo})}">[[ ${i} + 1 ]]</a> -->
-<!-- 		</th:block>	 -->
-<!-- 		<span th:if="${knowledgeList.hasNext()}"> -->
-<!-- 			<a th:href="@{/pageknowledge(page=${knowledgeList.number+1}, size=${knowledgeList.size}, platforminfo=${platforminfo}, searchWord=${searchWord}, -->
-<!-- 			titledescriptioninfo=${titledescriptioninfo}, titledescriptionkeyword=${titledescriptionkeyword}, commodityinfo=${commodityinfo}, countryinfo=${countryinfo}, -->
-<!-- 			statusinfo=${statusinfo}, severityinfo=${severityinfo})}">next</a> -->
-<!-- 		</span> -->
-			
-			
-<!-- 			<span th:if="${knowledgeList.hasPrevious()}"> -->
-<!-- 			<a th:href="@{/pageknowledge(page=${knowledgeList.number-1}, size=${knowledgeList.size})}">back</a> -->
-<!-- 		</span> -->
-<!-- 		<th:block th:each="i: ${#numbers.sequence(0,knowledgeList.totalPages - 1)}"> -->
-<!-- 			<a th:href="@{/pageknowledge(page=${i}, size=${knowledgeList.size})}">[[ ${i} + 1 ]]</a> -->
-<!-- 		</th:block>	 -->
-<!-- 		<span th:if="${knowledgeList.hasNext()}"> -->
-<!-- 			<a th:href="@{/pageknowledge(page=${knowledgeList.number+1}, size=${knowledgeList.size})}">next</a> -->
-<!-- 		</span> -->
+<!-- 		&nbsp; -->
 
+<!-- 		<a th:if="${currentPage > 1}" th:href="@{'/page/' + ${currentPage -1}}">Previous</a> -->
+<!-- 		<span th:unless="${currentPage > 1}">Previous</span> -->
+		
+<!-- 		&nbsp;&nbsp;&nbsp; -->
+		
+<!-- 		<span th:each="i: ${#numbers.sequence(1, totalPages)}"> -->
+<!-- 			<a th:if="${i != currentPage}" th:href="@{'/page/' + ${i}}">[[${i}]]</a> -->
+<!-- 			<span th:unless="${i != currentPage}">[[${i}]]</span> -->
+<!-- 			&nbsp;&nbsp; -->
+<!-- 		</span> -->
+		
+<!-- 		&nbsp; -->
+		
+<!-- 		<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}}">Next</a> -->
+<!-- 		<span th:unless="${currentPage < totalPages}">Next</span> -->
+
+<!-- 		&nbsp; -->
+
+<!-- 		<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}}">Last</a> -->
+<!-- 		<span th:unless="${currentPage < totalPages}">Last</span> -->
+		
+		
 <!-- 	</div> -->
-	
 	
 	</fieldset>
 
