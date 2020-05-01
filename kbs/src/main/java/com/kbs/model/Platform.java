@@ -8,6 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 public class Platform implements Serializable {
@@ -23,6 +26,9 @@ public class Platform implements Serializable {
 	private String marketName;
 
 	private String sysid;
+	
+	@Transient
+	private MultipartFile file;
 
 	@OneToMany(mappedBy = "platform")
 	private List<Knowledge> knowledges;
@@ -65,6 +71,14 @@ public class Platform implements Serializable {
 
 	public void setSysid(String sysid) {
 		this.sysid = sysid;
+	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
 	}
 
 	@Override

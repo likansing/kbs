@@ -33,17 +33,25 @@ table {
 		margin-left:3px;
 		margin-right: 3px;
 	}
-	th, a, span {
+ 	
+ 	td, th , td span {
 		text-align:center;
 	}
-	td span,a { 
-	   display: block;
+	td span { 
+ 	   display: block;
 	   color: black;
 	}
-	
+ 	
 	button {
 		margin: 0;
 		width: 100px;
+	}
+	.input-field {
+		margin-top: 20px;
+		margin-bottom: 0px;
+	}
+	.row {
+		margin: 0px;
 	}
 </style>
 
@@ -51,8 +59,7 @@ table {
 <body>
 
 	<h5 style="text-align: center;">Knowledge Base System</h5>
-
-	<nav style="position: fixed;">
+	<nav>
 		<div class="nav-wrapper">
 			<a href="/index" class="brand-logo right">Logo</a>
 			<a href="#" class="sidenav-trigger" data-target="mobile-nav">
@@ -73,81 +80,146 @@ table {
 	</ul>
 
 	<br>
-	<br>
-	<br>
+
+	<fieldset>
+		<legend style="padding-left: 5px; padding-right: 5px;">Load Platform data to Database</legend>
+		<div class="row">
+			<form action="" th:action="@{/fileupload}" id="formUpload" method="post" class="col s12" enctype="multipart/form-data">
+				<div class="row">
+					<div class="input-field col s6">
+						<label for="file" class="active">Select file (.xls or .xlsx format)</label>
+						<input type="file" class="file-field input-field" name="file" id="file">
+						<button class="btn waves-effect waves-teal" type="submit" name="upload">Upload</button>
+						<button class="btn waves-effect waves-teal" name="reset" type="reset">Clear</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</fieldset>
 	
-	<div th:each="m : ${msg}">
-		<span th:text = "${m}"></span>	
+	<div class="row" style="box-sizing: content-box;">
+		<div class="input-field col s12">
+			<div th:each="m : ${msg}">
+				<ul class="yellow lighten-4" style="height: 30px;">
+					<li class="collection-item">
+						<span style="vertical-align:middle; padding-left: 10px;" th:text="${m}"></span>
+					</li>
+				</ul>
+			</div>
+		</div>
 	</div>
 
-	<div class="row">
-		<form action="saveplatform" id="formplatform" method="post" class="col s12" th:object="${platformObj}" >
-			<div class="row">
-				<div class="input-field col s6">
-					<label for="id" class="active">ID</label>
-					<input name="id" id="id" readonly="readonly" th:field="*{id}">
+	<fieldset>
+		<legend style="padding-left: 5px; padding-right: 5px;">Edit/Save Platform</legend>
+		<div class="row">
+			<form action="saveplatform" id="formplatform" method="post" class="col s12" th:object="${platformObj}" >
+				<div class="row">
+					<div class="input-field col s6">
+						<label for="id" class="active">ID</label>
+						<input name="id" id="id" readonly="readonly" th:field="*{id}">
+					</div>
+					<div class="input-field col s6">
+						<label for="platformname" class="active">Platform Name</label>
+						<input name="platformname" type="text" id="platformname" class="validate" required="required" th:field="*{platformName}">
+					</div>
 				</div>
-				<div class="input-field col s6">
-					<label for="platformname" class="active">Platform Name</label>
-					<input name="platformname" id="platformname" class="validate" required="required" th:field="*{platformName}">
+				<div class="row">
+					<div class="input-field col s6">
+						<label for="marketname" class="active">Market Name</label>
+						<input id="marketname" type="text" name="marketname" class="validate" required="required" th:field="*{marketName}">
+					</div>
+					<div class="input-field col s6">	
+						<label for="sysid" class="active">SYSID</label>
+						<input id="sysid" type="text" name="sysid" class="validate" required="required" th:field="*{sysid}">
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="input-field col s6">
-					<label for="marketname" class="active">Market Name</label>
-					<input id="marketname" name="marketname" class="validate" required="required" th:field="*{marketName}">
+				<div class="row">
+					<div class="input-field col s6">
+						<button class="btn waves-effect waves-teal" type="submit" name="save">Save</button>
+						<button class="btn waves-effect waves-teal" name="new" onclick="resetfields()">New</button>
+					</div>
 				</div>
-				<div class="input-field col s6">	
-					<label for="sysid" class="active">SYSID</label>
-					<input id="sysid" name="sysid" class="validate" required="required" th:field="*{sysid}">
-				</div>
-			</div>
-			<div class="row">
-				<div class="input-field col s6">
-					<button class="btn waves-effect waves-teal" type="submit" name="save">Save</button>
-					<button class="btn waves-effect waves-teal" name="new" type="reset">New</button>
-				</div>
-			</div>
-		</form>
-	</div>
+			</form>
+		</div>
+	</fieldset>
 	
 	<br>
-	
-	<table class="striped">
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>Platform Name</th>
-				<th>Market Name</th>
-				<th>SYSID</th>
-				<th>Edit</th>
-				<th>Remove</th>
+	<fieldset>
+		<legend style="padding-left: 5px; padding-right: 5px;">Platform List</legend>
+		<table class="striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Platform Name</th>
+					<th>Market Name</th>
+					<th>SYSID</th>
+					<th>Edit</th>
+					<th>Remove</th>
+					
+				</tr>
+			</thead>
+			<tr th:each = "platformItem : ${platformList.content}">
+				<td><span th:text="${platformItem.id}"></span></td>
+				<td><span th:text = "${platformItem.platformName}"></span></td>
+				<td><span th:text = "${platformItem.marketName}"></span></td>
+				<td><span th:text = "${platformItem.sysid}"></span></td>
 				
+				<td><a th:href="@{/editplatform/{platformItemId}(platformItemId=${platformItem.id})}"><img alt="Edit" th:src="@{/img/editar.png}" width="25" height="25"></a></td>
+				<td><a th:href="@{/deleteplatform/{platformItemId}(platformItemId=${platformItem.id})}"><img alt="Delete" th:src="@{/img/delete5.png}" width="25" height="25"></a></td>
 			</tr>
-		</thead>
-		<tr th:each = "platformItem : ${platformList}">
-			<td><span th:text="${platformItem.id}"></span></td>
-			<td><span th:text = "${platformItem.platformName}"></span></td>
-			<td><span th:text = "${platformItem.marketName}"></span></td>
-			<td><span th:text = "${platformItem.sysid}"></span></td>
+		</table>
+		
+		
+		<div>&nbsp;</div>
+	
+		<div class="row" id="pagination" style="text-align: center;">
 			
-			<td><a ><img alt="Edit" th:src="@{/img/editar.png}" width="25" height="25"></a></td>
-			<td><a ><img alt="Delete" th:src="@{/img/delete5.png}" width="25" height="25"></a></td>
-		</tr>
-	</table>
+			Total Items: [[${platformList.totalElements}]]&nbsp;-&nbsp;Page [[${platformList.number+1}]] of [[${platformList.totalPages}]]
+			&nbsp;-&nbsp;
+			
+			<a th:if="${platformList.number+1 > 1}" th:href="@{/platformpage(page=0, size=${platformList.size})}">First</a>
+			<span th:unless="${platformList.number+1 > 1}">First</span>
+			&nbsp;&nbsp;
+			
+			<span th:if="${platformList.hasPrevious()}">
+				<a th:href="@{/platformpage(page=${platformList.number-1}, size=${platformList.size})}">Back</a>
+			</span>
+			<span th:unless="${platformList.hasPrevious()}">Back</span>
+			&nbsp;&nbsp;
+		
+			<th:block th:each="i: ${#numbers.sequence(0, platformList.totalPages - 1)}">
+				<a th:if="${i != platformList.number}" th:href="@{/platformpage(page=${i}, size=${platformList.size})}">[[${i} + 1]]</a>
+				<span th:unless="${i != platformList.number}">[[${i} + 1]]</span>
+	 			&nbsp;&nbsp;
+			</th:block>
+			
+			<span th:if="${platformList.hasNext()}">
+				<a th:href="@{/platformpage(page=${platformList.number+1}, size=${platformList.size})}">Next</a>
+			</span>
+			<span th:unless="${platformList.hasNext()}">Next</span>
+			&nbsp;&nbsp;
+			
+			<a th:if="${platformList.number+1 < platformList.totalPages}" th:href="@{/platformpage(page=${platformList.totalPages-1}, size=${platformList.size})}">Last</a>
+			<span th:unless="${platformList.number+1 < platformList.totalPages}">Last</span>
+		</div>
+	</fieldset>
 	
 	
 <script type="text/javascript">
-	$(document).ready(function(){
-		$('#createDate').datepicker({
-			showOthermonths:true,
-			format: 'yyyy-mm-dd'
-		});
-	});
+// 	$(document).ready(function(){
+// 		$('#createDate').datepicker({
+// 			showOthermonths:true,
+// 			format: 'yyyy-mm-dd'
+// 		});
+// 	});
 	
 	$(document).ready(function(){
  		$('.sidenav').sidenav();
  	});
+	
+	function resetfields(){
+		window.location.replace("/admin");
+	}
 	
 </script>
 	
