@@ -149,12 +149,12 @@ table {
 		<table class="striped">
 			<thead>
 				<tr>
-					<th>ID</th>
-					<th>Platform Name</th>
-					<th>Market Name</th>
-					<th>SYSID</th>
-					<th>Edit</th>
-					<th>Remove</th>
+					<th style="width: 5%;">ID</th>
+					<th style="width: 30%;">Platform Name</th>
+					<th style="width: 30%;">Market Name</th>
+					<th style="width: 15%;">SYSID</th>
+					<th style="width: 10%;">Edit</th>
+					<th style="width: 10%;">Remove</th>
 					
 				</tr>
 			</thead>
@@ -187,11 +187,11 @@ table {
 			<span th:unless="${platformList.hasPrevious()}">Back</span>
 			&nbsp;&nbsp;
 		
-			<th:block th:each="i: ${#numbers.sequence(0, platformList.totalPages - 1)}">
-				<a th:if="${i != platformList.number}" th:href="@{/platformpage(page=${i}, size=${platformList.size})}">[[${i} + 1]]</a>
-				<span th:unless="${i != platformList.number}">[[${i} + 1]]</span>
-	 			&nbsp;&nbsp;
-			</th:block>
+<!-- 			<th:block th:each="i: ${#numbers.sequence(0, platformList.totalPages - 1)}"> -->
+<!-- 				<a th:if="${i != platformList.number}" th:href="@{/platformpage(page=${i}, size=${platformList.size})}">[[${i} + 1]]</a> -->
+<!-- 				<span th:unless="${i != platformList.number}">[[${i} + 1]]</span> -->
+<!-- 	 			&nbsp;&nbsp; -->
+<!-- 			</th:block> -->
 			
 			<span th:if="${platformList.hasNext()}">
 				<a th:href="@{/platformpage(page=${platformList.number+1}, size=${platformList.size})}">Next</a>
