@@ -142,12 +142,12 @@
 					<label for="commodityinfo" class="active">Commodity</label>
 					<select class="browser-default" name="commodityinfo" id="commodityinfo" th:value="${commodityinfo}">
 						<option value="" selected="selected">Choose</option>
-						<option th:each="c : ${commodities}" th:value="${c.id}" th:text="${c.commodity}"></option>
+						<option th:each="c : ${commodities}" th:value="${c.id}" th:text="${c.commodity}" ></option>
 					</select>
 				</div>
 				<div class="input-field col s4">
 					<label for="countryinfo" class="active">Country</label>
-					<select class="browser-default" name="countryinfo" id="countryinfo" th:value="${countryinfo}">
+						<select class="browser-default" name="countryinfo" id="countryinfo" th:value="${countryinfo}" >
 						<option value="" selected="selected">Choose</option>
 						<option th:each="ctry : ${countries}" th:value="${ctry.id}" th:text="${ctry.country}"></option>
 					</select>
