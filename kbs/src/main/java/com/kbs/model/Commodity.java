@@ -17,7 +17,6 @@ public class Commodity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
 	private String commodity;
 
 	@OneToMany(mappedBy = "commodity")
@@ -56,7 +55,6 @@ public class Commodity implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((commodity == null) ? 0 : commodity.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
@@ -70,11 +68,6 @@ public class Commodity implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Commodity other = (Commodity) obj;
-		if (commodity == null) {
-			if (other.commodity != null)
-				return false;
-		} else if (!commodity.equals(other.commodity))
-			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;

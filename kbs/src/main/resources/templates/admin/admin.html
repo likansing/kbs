@@ -136,7 +136,7 @@ table {
 				<div class="row">
 					<div class="input-field col s6">
 						<button class="btn waves-effect waves-teal" type="submit" name="save">Save</button>
-						<button class="btn waves-effect waves-teal" name="new" onclick="resetfields()">New</button>
+						<button id="newbtn" class="btn waves-effect waves-teal" name="new">New</button>
 					</div>
 				</div>
 			</form>
@@ -220,6 +220,18 @@ table {
 	function resetfields(){
 		window.location.replace("/admin");
 	}
+	
+	function erasefields(){
+		document.getElementById("sysid").value = '';
+	}
+	
+	 $("#newbtn").click(function(event) { 
+         $('#sysid').val("");
+         $('#marketname').val("");
+         $('#platformname').val("");
+         $('#id').val("");
+         
+     }); 
 	
 </script>
 	

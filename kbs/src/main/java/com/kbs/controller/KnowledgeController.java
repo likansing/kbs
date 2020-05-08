@@ -61,19 +61,21 @@ public class KnowledgeController {
 	@RequestMapping("/")
 	public ModelAndView index() {
 		
-//		Knowledge kInicial = new Knowledge();
-//		Commodity cInicial = new Commodity();
-//		RegionCountry rcInicial = new RegionCountry();
-//		
-//		cInicial.setId(2L);
-//		rcInicial.setId(2L);
-//		kInicial.setCommodity(cInicial);
-//		kInicial.setRegionCountry(rcInicial);
+		Knowledge k = new Knowledge();
+		Commodity c = new Commodity();
+		RegionCountry rc = new RegionCountry();
 		
+		rc = regionCountryRepository.findById(1L).get();
+		k.setRegionCountry(rc);
+
+		c = commodityRepository.findById(1L).get();
+		k.setCommodity(c);
+
 		ModelAndView modelAndView = new ModelAndView("/index");
 		modelAndView.addObject("knowledgeList", knowledgeRepository.findAll(PageRequest.of(0, 5, Sort.by("id").descending())));
 		modelAndView.addObject("commodities", commodityRepository.findAll());
-		modelAndView.addObject("knowledgeObj", new Knowledge());
+//		modelAndView.addObject("knowledgeObj", new Knowledge());
+		modelAndView.addObject("knowledgeObj", k);
 		modelAndView.addObject("countries", regionCountryRepository.findAll());
 		return modelAndView;
 	}
@@ -81,32 +83,49 @@ public class KnowledgeController {
 	@RequestMapping("**/index")
 	public ModelAndView index2() {
 		
+		Knowledge k = new Knowledge();
+		Commodity c = new Commodity();
+		RegionCountry rc = new RegionCountry();
 		
+		rc = regionCountryRepository.findById(1L).get();
+		k.setRegionCountry(rc);
+
+		c = commodityRepository.findById(1L).get();
+		k.setCommodity(c);
 		
 		ModelAndView modelAndView = new ModelAndView("/index");
 		modelAndView.addObject("knowledgeList", knowledgeRepository.findAll(PageRequest.of(0, 5, Sort.by("id").descending())));
 		modelAndView.addObject("commodities", commodityRepository.findAll());
-		modelAndView.addObject("knowledgeObj", new Knowledge());
+		modelAndView.addObject("knowledgeObj", k);
 		modelAndView.addObject("countries", regionCountryRepository.findAll());
+		modelAndView.addObject("searchWord", "");
+		modelAndView.addObject("platforminfo", "");
+		modelAndView.addObject("titledescriptioninfo", "");
+		modelAndView.addObject("titledescriptionkeyword", "");
+//		modelAndView.addObject("commodityinfo", commodityinfo);
+//		modelAndView.addObject("countryinfo", countryinfo);
+		modelAndView.addObject("statusinfo", "");
+		modelAndView.addObject("severityinfo", "");
 		return modelAndView;
 	}
 	
 	@GetMapping("**/registerknowledge")
 	public ModelAndView registerKnowledge() {
+		
 		ModelAndView modelAndView = new ModelAndView("register/registerknowledge");
 		modelAndView.addObject("knowledgeObj", new Knowledge());
-		
 		Iterable<Platform> platforms = platformRepository.findAll();
 		
 		for (Platform platform : platforms) {
 			platform.setPlatformName(platform.getPlatformName() + " " + platform.getMarketName());
 		}
 		
+		int qtyRc = regionCountryRepository.findAll().size();
+		int qtyCommodity = commodityRepository.findAll().size();
+		
 		modelAndView.addObject("platforms", platforms);
-//		modelAndView.addObject("commodities", commodityRepository.findAll());
-		modelAndView.addObject("commodities", commodityRepository.searchAllUnlessId1());
-//		modelAndView.addObject("countries", regionCountryRepository.findAll());
-		modelAndView.addObject("countries", regionCountryRepository.searchAllUnlessId1());
+		modelAndView.addObject("countries", regionCountryRepository.findAll().subList(1, qtyRc));
+		modelAndView.addObject("commodities", commodityRepository.findAll().subList(1, qtyCommodity));
 		return modelAndView;
 	}
 
@@ -160,12 +179,21 @@ public class KnowledgeController {
 	@GetMapping("**/editknowledge/{knowledgeItemId}")
 	public ModelAndView editKnowledge(@PathVariable("knowledgeItemId") Long knowledgeItemId) {
 
+		Iterable<Platform> platforms = platformRepository.findAll();
+		
+		for (Platform platform : platforms) {
+			platform.setPlatformName(platform.getPlatformName() + " " + platform.getMarketName());
+		}
+		
+		int qtyRc = regionCountryRepository.findAll().size();
+		int qtyCommodity = commodityRepository.findAll().size();
+		
 		Optional<Knowledge> knowledge = knowledgeRepository.findById(knowledgeItemId);
 		ModelAndView modelAndView = new ModelAndView("register/registerknowledge");
 		modelAndView.addObject("knowledgeObj", knowledge.get());
-		modelAndView.addObject("platforms", platformRepository.findAll());
-		modelAndView.addObject("commodities", commodityRepository.findAll());
-		modelAndView.addObject("countries", regionCountryRepository.findAll());
+		modelAndView.addObject("platforms", platforms);
+		modelAndView.addObject("countries", regionCountryRepository.findAll().subList(1, qtyRc));
+		modelAndView.addObject("commodities", commodityRepository.findAll().subList(1, qtyCommodity));
 		return modelAndView;
 	}
 	
@@ -233,12 +261,6 @@ public class KnowledgeController {
 			kAnswer.setRegionCountry(rc);
 		}
 		
-//		if(countryinfo != null && !countryinfo.isEmpty()) {
-//			rc = regionCountryRepository.findById(Long.parseLong(countryinfo)).get();
-//			kAnswer.setRegionCountry(rc);
-//		}
-		
-		
 		if(commodityinfo.equalsIgnoreCase("1") && commodityinfo != null) {
 			c = commodityRepository.findById(1L).get();
 			kAnswer.setCommodity(c);
@@ -247,12 +269,6 @@ public class KnowledgeController {
 			c = commodityRepository.findById(Long.parseLong(commodityinfo)).get();
 			kAnswer.setCommodity(c);
 		}
-		
-//		if(commodityinfo != null && !commodityinfo.isEmpty()) {
-//			c = commodityRepository.findById(Long.parseLong(commodityinfo)).get();
-//			kAnswer.setCommodity(c);
-//		}
-		
 		
 		//platforminfo recebe string sendo platformName, marketName ou sysid
 		// searchWord contem o digitado para busca
@@ -344,11 +360,6 @@ public class KnowledgeController {
 			kAnswer.setRegionCountry(rcFromSearch);
 		}
 		
-//		if(knowledgeRecebido.getRegionCountry() != null) {
-//			rcFromSearch = regionCountryRepository.findById(knowledgeRecebido.getRegionCountry().getId()).get();
-//			kAnswer.setRegionCountry(rcFromSearch);
-//		}
-		
 		if(knowledgeRecebido.getCommodity().getId().equals(1L) && knowledgeRecebido.getCommodity() != null) {
 			commodityFromSearch = commodityRepository.findById(1L).get();
 			kAnswer.setCommodity(commodityFromSearch);
@@ -358,14 +369,7 @@ public class KnowledgeController {
 			kAnswer.setCommodity(commodityFromSearch);
 		}
 		
-//		if(knowledgeRecebido.getCommodity() != null) {
-//			commodityFromSearch = commodityRepository.findById(knowledgeRecebido.getCommodity().getId()).get();
-//			kAnswer.setCommodity(commodityFromSearch);
-//		}
-		
 		Knowledge k = new Knowledge();
-//		k.setCommodity(commodityFromSearch);
-//		k.setCommodity(commodityFromSearch);
 		Platform p = new Platform();
 		
 		//platforminfo recebe string sendo platformName, marketName ou sysid
@@ -424,13 +428,5 @@ public class KnowledgeController {
 		modelAndView.addObject("knowledgeObj", knowledge.get());
 		return modelAndView;
 	}
-//	//, produces = MediaType.APPLICATION_JSON_VALUE
-//	@RequestMapping(value = "**/productchange", method = RequestMethod.POST)
-//	@ResponseBody
-//	public String updatePlatformMarktnameCombo (HttpServletRequest req, HttpServletResponse res) {
-//		
-//		Optional<Platform> platform = platformRepository.findById(Long.parseLong(req.getParameter("id")));
-//		return platform.get().toString();
-//	}
 
 }
